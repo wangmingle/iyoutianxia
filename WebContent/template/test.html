@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<html xmlns="http://www.w3.org/1999/xhtml">  
+<head>  
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
+<title>光标控制器</title>  
+<script type="text/javascript">
+function cursorControl(a){
+    this.element=a;
+    this.range=!1;
+    this.start=0;
+    this.init();
+};
+cursorControl.prototype={
+    init:function(){
+        var _that=this;
+        this.element.onkeyup=this.element.onmouseup=function(){
+            this.focus();
+            if(document.all){
+                _that.range=document.selection.createRange();
+            }else{
+                _that.start=_that.getStart();
+            }
+        }
+    },
+    getType:function(){
+        return Object.prototype.toString.call(this.element).match(/^\[object\s(.*)\]$/)[1];
+    },
+    getStart:function(){
+        if (this.element.selectionStart || this.element.selectionStart == '0'){  
+            return this.element.selectionStart; 
+        }
+         
+//        else if (window.getSelection){  
+//            var rng = window.getSelection().getRangeAt(0).cloneRange();  
+//            rng.setStart(this.element,0);  
+//           return rng.toString().length;
+//        }
+    },
+    insertText:function(text){
+        this.element.focus();  
+        if(document.all){
+            document.selection.empty();  
+            this.range.text = text;  
+            this.range.collapse();  
+            this.range.select();
+        }  
+        else{
+            if(this.getType()=='HTMLDivElement'){
+                //this.element.innerHTML=this.element.innerHTML.substr(0,this.start)+text+this.element.innerHTML.substr(this.start);
+                // Begain of The Content added by bedweather 
+                var sel = window.getSelection();
+                var rang = sel.rangeCount > 0 ? sel.getRangeAt(0) : null;
+                if (rang == undefined 
+                    || rang == null
+                    || (rang.commonAncestorContainer.id !="editdiv"
+                        && rang.commonAncestorContainer.parentNode.id !="editdiv")){
+                    this.element.focus();
+                    rang = document.createRange();
+                    rang = selectNode(this.element);
+                    rang.setStart(range.getEndContainer, rang.endOffset);
+                }
+                rang.deleteContents();
+                rang.insertNode(rang.createContextualFragment(text));
+                var tempRange = document.createRange();
+                var a = document.getElementById("editdiv")
+                tempRange.selectNodeContents(a);
+                if(rang.commonAncestorContainer.id == "editdiv"){
+                    tempRange.setStart(rang.endContainer, rang.endOffset+1);
+                    tempRange.setEnd(rang.endContainer, rang.endOffset+1);
+                } else {
+                    tempRange.setStartAfter(rang.endContainer.nextSibling);
+                    tempRange.setEndAfter(rang.endContainer.nextSibling);
+                }
+                sel.removeAllRanges();
+                sel.addRange(tempRange);
+                this.element.focus();
+                // End of The Content added by bedweather 
+ 
+            }else{
+                this.element.value=this.element.value.substr(0,this.start)+text+this.element.value.substr(this.start);
+            };
+        } 
+    },
+    getText:function(){
+        if (document.all){  
+            var r = document.selection.createRange();  
+            document.selection.empty();  
+            return r.innerHTML;  
+        }  
+        else{  
+            if (this.element.selectionStart || this.element.selectionStart == '0'){
+                var text=this.getType()=='HTMLDivElement'?this.element.innerHTML:this.element.value;
+                return text.substring(this.element.selectionStart,this.element.selectionEnd); 
+            } 
+            else if (window.getSelection){  
+                return window.getSelection().toString()
+            };  
+        }  
+    },
+    getHtml:function(){
+        return this.element.innerHTML; 
+    }
+};
+var c1,c2;
+window.onload=function(){
+    c1=new cursorControl(document.getElementById('text'));
+    c2=new cursorControl(document.getElementById('editdiv'));
+};
+function fn1(str){
+    c1.insertText(str);
+};
+function fn2(str){
+    c2.insertText('<img src="../images/ditu.png"/>');
+};
+function fn3(){
+    alert(c2.getHtml());
+};
+function fn4(){
+    //alert(c2.getHtml());
+    var txt=c2.getText();
+    document.execCommand('CreateLink', true, "http://www.baidu.com");
+}     
+</script>  
+</head>  
+<body>  
+    <input type = "button" value = "插入字符串 {文本1}" onclick="fn1('{文本1}');"/><input type = "button" value = "获取选中的文本" onclick="fn3();"/><br />  <br />
+    <textarea id="text" cols="50" rows="5">这里是文本框</textarea><br /><br />  
+    <input type = "button" value = "插入字符串 {文本2}" onclick="fn2('{文本2}');"/> <input type = "button" value = "获取选中的文本" onclick="fn4();"/><br />  <br /> 
+    <input type = "button" value = "插入图片" onclick="fn2('')"/> <input type = "button" value = "获取选中的文本" onclick="fn4();"/><br />  <br />
+    <div id="editdiv" contentEditable="true" style="HEIGHT:500px;WIDTH:550px;PADDING-RIGHT:0px;OVERFLOW-Y:auto;PADDING-LEFT:0px;  
+            SCROLLBAR-FACE-COLOR:#CC9999;PADDING-BOTTOM:0px;  
+            SCROLLBAR-HIGHLIGHT-COLOR:#CCFFFF;OVERFLOW:auto;  
+            SCROLLBAR-TRACK-COLOR:#ffffff;SCROLLBAR-ARROW-COLOR:#919192;  
+            SCROLLBAR-DARKSHADOW-COLOR:#ffffff;  
+            SCROLLBAR-SHADOW-COLOR:#919192;SCROLLBAR-3DLIGHT-COLOR:#ffffff;  
+            LINE-HEIGHT:100%;PADDING-TOP:5px;  
+            FONT-SIZE:11pt;FONT-FAMILY:宋体;COLOR:black;LETTER-SPACING:1pt;  
+            TEXT-ALIGN:left;border:1px black solid;">这里是一个可编辑层</div><br />     
+</body>  
+</html>

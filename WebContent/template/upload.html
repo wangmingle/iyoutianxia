@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Upload</title>
+
+<!--装载文件-->
+<link href="../css/uploadify.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="../js/swfobject.js"></script>
+<script type="text/javascript" src="../js/jquery.uploadify.js"></script>
+
+<!--ready事件-->
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#uploadify").uploadify({
+			'swf' : 'uploadify.swf',
+			'uploader' : '/file/upload',
+			'cancelImg' : '../css/uploadify-cancel.png',
+			'folder' : 'uploads',//您想将文件保存到的路径
+			'queueID' : 'fileQueue',//与下面的id对应
+			'queueSizeLimit' : 5,
+			'fileDesc' : 'rar文件或zip文件',
+			'fileExt' : '*.rar;*.zip', //控制可上传文件的扩展名，启用本项时需同时声明fileDesc
+			'auto' : false,
+			'multi' : true,
+			'simUploadLimit' : 2,
+			'buttonText' : 'BROWSE'
+		});
+	});
+</script>
+</head>
+
+<body>
+<a href="/uploadify.swf">dddddd</a>
+	<div id="fileQueue"></div>
+	<input type="file" name="uploadify" id="uploadify" />
+	<p>
+		<a href="javascript:jQuery('#uploadify').uploadify('upload','*')">开始上传</a>&nbsp;
+		<a href="javascript:jQuery('#uploadify').uploadify('cancel','*')">取消所有上传</a>
+	</p>
+</body>
+</html>

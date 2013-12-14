@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="description" content="Administry - Admin Template by www.865171.cn" />
+<meta name="keywords" content="Admin,Template" />
+<link rel="shortcut icon" type="image/png" HREF="../img/favicons/favicon.png"/>
+<link rel="icon" type="image/png" HREF="../img/favicons/favicon.png"/>
+<link rel="apple-touch-icon" HREF="../img/favicons/apple.png" />
+<meta http-equiv="x-ua-compatible" content="IE=Edge"/>
+  <meta name="viewport" content="width=device-width initial-scale=1.0 user-scalable=no">
+
+<link rel="stylesheet" href="../css/style.css" type="text/css" />
+<link rel="stylesheet" href="../css/custom.css" type="text/css" />
+<script type="text/javascript" SRC="http://code.jquery.com/jquery-1.7.2.js"></script>
+<script type="text/javascript" SRC="../js/swfobject.js"></script>
+<script type="text/javascript" SRC="../js/jquery.ui.core.min.js"></script>
+<script type="text/javascript" SRC="../js/jquery.ui.widget.min.js"></script>
+<script type="text/javascript" SRC="../js/jquery.ui.tabs.min.js"></script>
+<script type="text/javascript" SRC="../js/jquery.tipTip.min.js"></script>
+<script type="text/javascript" SRC="../js/jquery.superfish.min.js"></script>
+<script type="text/javascript" SRC="../js/jquery.supersubs.min.js"></script>
+<script type="text/javascript" SRC="../js/jquery.nyroModal.pack.js"></script>
+<script type="text/javascript" SRC="../js/jquery.validate_pack.js"></script>
+<script type="text/javascript" SRC="../js/jquery.tagInput.min.js"></script>
+<script type="text/javascript" SRC="../js/jquery.contextmenu.r2.js"></script>
+
+<script type="text/javascript" src="../jBox/jquery.jBox-2.3.min.js"></script>
+<script type="text/javascript" src="../jBox/i18n/jquery.jBox-zh-CN.js"></script>
+<link type="text/css" rel="stylesheet" href="../jBox/Skins/Blue/jbox.css"/>
+
+<script type="text/javascript" SRC="../xheditor/xheditor-1.1.14-zh-cn.js"></script>
+<script type="text/javascript" SRC="../at/jquery.atwho.js"></script>
+<script type="text/javascript" SRC="../at/jquery.caret.js"></script>
+<link type="text/css" rel="stylesheet" href="../at/jquery.atwho.css"/>
+<!-- Internet Explorer Fixes --> 
+<!--[if IE]>
+<link rel="stylesheet" type="text/css" media="all" href="../css/ie.css"/>
+<script src="../js/html5.js"></script>
+<![endif]-->
+<!--Upgrade MSIE5.5-7 to be compatible with MSIE8: http://ie7-js.googlecode.com/svn/version/2.1(beta3)/IE8.js -->
+<!--[if lt IE 8]>
+<script src="../js/IE8.js"></script>
+<![endif]-->
+<style type="text/css">
+<!--
+.testClassName {
+	background:transparent url(http://localhost:8080/iyoutianxia/xheditor/plugin.gif) no-repeat 16px 16px;
+	background-position:2px 2px;
+}
+.btnCode {
+	background:transparent url(http://localhost:8080/iyoutianxia/xheditor/plugin.gif) no-repeat 16px 16px;
+	background-position:2px 2px;
+}
+-->
+</style>
+<script type="text/javascript">
+
+/* sample tags */
+var tags=[
+	{tag:"js",freq:30},{tag:"jquery",freq:25}, {tag:"pojo",freq:10},{tag:"agile",freq:4},
+	{tag:"blog",freq:3},{tag:"canvas",freq:8}, {tag:"dialog",freq:3},{tag:"excel",freq:4},
+	{tag:"engine",freq:5},{tag:"flex",freq:18}, {tag:"firefox",freq:23},{tag:"javascript",freq:40},
+	{tag:"graph",freq:15},{tag:"grid",freq:20}, {tag:"hibernate",freq:13},{tag:"ical",freq:4},
+	{tag:"ldap",freq:9},{tag:"load",freq:20}, {tag:"security",freq:13},{tag:"XSS",freq:21},
+	{tag:"CSRF",freq:19},{tag:"html",freq:22}, {tag:"xml",freq:13},{tag:"tools",freq:21}
+];
+
+
+</script>
+</head>
+<body onload="gethtml('');">
+	<!-- Header -->
+	<!-- #include /header.html -->
+	<!-- End of Header -->
+	<!-- Page title -->
+	<div id="pagetitle">
+		<div class="wrapper">
+			<h1>社区 &rarr; <span>游记</span></h1>
+			<!-- Quick search box -->
+			<form action="" method="get"><input class="" type="text" id="q" name="q" /></form>
+		</div>
+	</div>
+	<!-- End of Page title -->
+	
+	<!-- Page content -->
+	<div id="page">
+		<!-- Wrapper -->
+		<div class="wrapper">
+				<!-- Left column/section -->
+				<section class="column width6 first">					
+
+					<h3>发表新游记</h3>
+					
+					<form id="sampleform" method="post" action="notepub" onsubmit="return checks();">
+						<input type="hidden" id="notesFlag" value="add" name="notesFlag"/>
+						<input type="hidden" id="notesTags" value="" name="tags"/>
+						<input type="hidden" id="context" value="" name="context"/>
+						<fieldset>
+							<legend>游记信息</legend>
+							<p>
+								<label class="required" for="producttitle">标题</label><br/>
+								<input type="text" id="producttitle" class="half title" value="" name="name"/>
+								<small>游记标题突出关键词便于检索</small>
+							</p>
+							
+							<div class="section">
+								<textarea id="preview" rows="8" cols="120"></textarea>
+							</div>
+							<div class="coordinate-box"></div>
+      <div class="cursor"></div>
+							<div class="clearfix leading">
+								<div class="column width3 first">
+									<p>
+										<label for="productcat">游记类型</label><br/>
+										<select id="productcat" class="full" name="productcat">
+											
+										</select>
+										<small></small>
+									</p>
+									<p><a href="#">+ 自定义游记类型</a></p>
+								</div>
+							</div>
+						
+							<p class="box"><input type="submit" class="btn btn-green big" value="保存"/> or <a href="#">取消</a></p>
+
+						</fieldset>
+
+					</form>
+
+				</section>
+				<!-- End of Left column/section -->
+				
+				<!-- Right column/section -->
+				<aside class="column width2">
+					<p><a href="#" class="btn btn-special btn-green"><img SRC="../img/page_white_go.png" class="icon" alt=""/>游记预览</a></p>
+					<p><a href="#" class="btn btn-special"><img SRC="../img/page_save.png" class="icon" alt=""/>保存游记</a></p>
+					<div class="content-box">
+						<header>
+							<h3>权限信息</h3>
+						</header>
+						<section>
+							请选择游记的权限信息，公开：任何人都可以批注，私有：不允许其他人批注。
+							<p>
+								<select id="visibility" class="full" name="visibility">
+									<option value="1" selected>公开</option>
+									<option value="2">私有</option>
+								</select>
+							</p>
+						</section>
+					</div>
+					<div class="content-box">
+						<header>
+							<h3>游记标签</h3>
+						</header>
+						<section>
+							请选择或输入游记标签，这样更便于其他人找到你的游记，标签之间用空格隔开
+							<!--<p><textarea id="tags" class="small full" name="tags"></textarea></p>
+						--></section>
+					</div>
+					<div id="rightmenu">
+						<dl class="first">
+							<dt><img width="16" height="16" alt="" SRC="../img/help.png"></dt>
+							<dd><a href="#">帮助</a></dd>
+							<dd class="last">如果你需要帮助，请查看帮助信息</dd>							
+						</dl>
+					</div>
+				</aside>
+				<!-- End of Right column/section -->
+				
+		</div>
+		<!-- End of Wrapper -->
+	</div>
+	<!-- End of Page content -->
+	
+	<!-- Page footer -->
+	<footer id="bottom">
+		<div class="wrapper">
+			<nav>
+				<a href="#">Dashboard</a> &middot;
+				<a href="#">Content</a> &middot;
+				<a href="#">Reports</a> &middot;
+				<a href="#">Users</a> &middot;
+				<a href="#">Media</a> &middot;
+				<a href="#">Events</a> &middot;
+				<a href="#">Newsletter</a> &middot;
+				<a href="#">Settings</a>
+			</nav>
+			<p>Copyright &copy; 2010 <b><a HREF="http://www.865171.cn" title="www.865171.cn">www.865171.cn</a></b> | Icons by <a HREF="http://www.865171.cn">865171.cn</a></p>
+		</div>
+	</footer>
+	<!-- End of Page footer -->
+	
+	<!-- Animated footer -->
+	<footer id="animated">
+		<ul>
+			<li><a href="#">Dashboard</a></li>
+			<li><a href="#">Content</a></li>
+			<li><a href="#">Reports</a></li>
+			<li><a href="#">Users</a></li>
+			<li><a href="#">Media</a></li>
+			<li><a href="#">Events</a></li>
+			<li><a href="#">Newsletter</a></li>
+			<li><a href="#">Settings</a></li>
+		</ul>
+	</footer>
+	<!-- End of Animated footer -->
+	
+	<!-- Scroll to top link -->
+	<a href="#" id="totop">^ scroll to top</a>
+
+<!-- User interface javascript load -->
+<script type="text/javascript" SRC="../js/administry.js"></script>
+<script type="text/javascript">
+	function checks(){
+		//alert(editor.getSource());
+		document.getElementById("context").value=editor.getSource();
+		return true;
+	}
+    
+    Administry.setup();
+</script>
+<script type="text/javascript">
+									      		
+									      		var html='';
+									      		var svalue='';
+									      		var selecteds='';
+									      	
+									      		function chan(v){
+									      			//svalue=v.value;
+									      			//ajaxtest(v);
+									      			gethtml(v.value);
+									      			$.jBox.setContent(html);
+									      			//editor.appendHTML(html);
+									      		}
+									      		
+									      		function albumjs(v){
+									      			var str="";
+									      			$.ajax({
+									      				type: "post",
+									      				url: "albumjson",
+									      				dataType:'json',
+									      				cache: false, 
+														async:false,
+									      				beforeSend: function(XMLHttpRequest){
+									      					//ShowLoading();
+									      				},
+									      				success: function(data, textStatus){
+									      					if(v==""){
+									      						svalue=data[0].id;
+									      					}else{
+									      						svalue=v;
+									      					}
+									      					for(var i=0;i<data.length;i++){
+									      						if(svalue!=""&&svalue==data[i].id){
+									      							str+='<option value="'+data[i].id+'" selected>'+data[i].name+'</option>';
+									      						}else{
+									      							str+='<option value="'+data[i].id+'">'+data[i].name+'</option>';
+									      						}
+									      						
+									      					}
+									      					//alert(str);
+									      					return str;
+												      		
+									      				},
+									      				complete: function(XMLHttpRequest, textStatus){
+									      					//HideLoading();
+									      				},
+									      				error: function(){
+									      					//请求出错处理
+									      				}
+									      			});
+									      			return str;
+									      		}
+									      		
+									      		function albumdetailjs(v){
+									      			if(v==""){
+									      				v=svalue;
+									      			}
+									      			var str="";
+									      			$.ajax({
+									      				type: "post",
+									      				url: "albumdetailjson",
+									      				dataType:'json',
+									      				data:{"albumid":v},
+									      				cache: false, 
+														async:false,
+									      				beforeSend: function(XMLHttpRequest){
+									      					//ShowLoading();
+									      				},
+									      				success: function(data, textStatus){
+									      					//alert(data.length);
+									      					str+='<table style="width:480px;"><tr>';
+									      					for(var i=0;i<data.length;i++){
+									      						if(checkone(data[i].id+"-"+data[i].name+"-http://localhost:8080/iyoutianxia/uploads/small/"+data[i].name)){
+									      							str+='<td  style="width: 77px;height: 77px;" align="center" valign="top"><img id="'+data[i].id+'" name="'+data[i].name+'" style="border-width: thick;cursor:hand;border-color:red;" onclick="parent.selectd(this)" src="../uploads/small/'+data[i].name+'">1</td>';
+									      						}else{
+									      							str+='<td  style="width: 77px;height: 77px;" align="center" valign="top"><img id="'+data[i].id+'" name="'+data[i].name+'" style="border-width: thick;cursor:hand;" onclick="parent.selectd(this)" src="../uploads/small/'+data[i].name+'">0</td>';
+									      						}
+									      						if(i!=0&&data[i].rownum==4){
+									      							str+='</tr><tr>';
+									      						}
+									      					}
+									      					str+='</tr></table>';
+									      					//alert(str);
+												      		return str;
+									      				},
+									      				complete: function(XMLHttpRequest, textStatus){
+									      					//HideLoading();
+									      				},
+									      				error: function(){
+									      					//请求出错处理
+									      				}
+									      			});
+									      			return str;
+									      		}
+									      		function gethtml(v){
+									      			html='请选择相册：<select id="test" onchange="javascript:parent.chan(this);">';
+										      		html+=albumjs(v);
+							      					html+='</select>';
+										      		html+='<table style="height:470px;"><tr><td style="width:510px;vertical-align:top;" align="left" valign="top">';
+										      		html+='<div id="queue1" style="background-color: #FFF;border-radius: 3px;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);height: 445px;margin-bottom: 10px;overflow: auto;padding: 5px 10px;width: 500px;">';
+										      		html+=albumdetailjs(v);
+										      		html+='<div>';
+										      		html+='</td><td style="width:10px;"></td><td style="width:120px;vertical-align:top;" align="left" valign="top">';
+										      		html+='<div id="queue1" style="background-color: #FFF;border-radius: 3px;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);height: 445px;margin-bottom: 10px;overflow: auto;padding: 5px 10px;width: 100px;">';
+										      		html+='<table><tr><td></td></tr>';
+										      		html+=selecteds;
+										      		html+='</table>';
+										      		html+='<div>';
+										      		html+='</td></tr></table>';
+									      		}
+									      		function selectd(v){
+													//alert(v.style.borderColor);
+													if(v.style.borderColor==""){
+														v.style.borderColor="red"
+														addone(v.id+"-"+v.name+"-"+v.src);
+														
+														//gethtml();
+														
+														//$.jBox.setContent(html);
+													}else{
+														v.style.borderColor="";
+														removeone(v.id+"-"+v.name+"-"+v.src);
+														
+														
+													}
+													addselected(v);
+													
+													gethtml(svalue);
+													
+													$.jBox.setContent(html);
+													//editor.appendHTML(html);
+												}
+												function reselected(vv){
+													//alert(vv.style.borderColor);
+													if(vv.style.borderColor==""){
+														vv.style.borderColor="red";
+														//v.selected="true";
+													}else{
+														vv.style.borderColor="";
+														//v.selected="";
+													}
+												}
+												var sarray=new Array();
+												function addone(v){
+													//alert(v);
+													if(!checkone(v)){
+														sarray.push(v);
+													}
+													
+													
+												}
+												function removeone(v){
+													var j=-1;
+													for(var i=0;i<sarray.length;i++){
+														if(v==sarray[i]){
+															j=i;
+															break;
+														}
+													}
+													//alert(j);
+													if(j>-1){
+														sarray.splice(j,1);
+													}
+												}
+												function checkone(v){
+													var j=-1;
+													if(sarray.length>0){
+														for(var i=0;i<sarray.length;i++){
+															if(v==sarray[i]){
+																j=i;
+																break;
+															}
+														}
+														if(j>-1){
+															return true;
+														}
+													}
+													return false;
+												}
+												
+												function addselected(v){
+													//alert(sarray.length);
+													var imgsrc="";
+													for(var i=0;i<sarray.length;i++){
+														var ss=sarray[i].split("-");
+														//alert(ss[2]);
+														imgsrc+='<tr><td style="width: 77px;height: 77px;" align="center" valign="top"><img id="'+ss[0]+'" name="'+ss[1]+'"　style="border-width: thick;cursor:hand;" onclick="reselected(this)" src="'+ss[2]+'"></td></tr>';
+													}
+													selecteds=imgsrc;
+													
+												}
+												
+												function getimg(){
+													//alert("sssss"+sarray.length);
+													var imgs="";
+													for(var i=0;i<sarray.length;i++){
+														var ss=sarray[i].split("-");
+														//alert(ss[2]);
+														
+														imgs+=('<img id="'+ss[0]+'" name="'+ss[1]+'" src="http://localhost:8080/iyoutianxia/uploads/medium/'+ss[1]+'" /></br></br>');
+													}
+													//$('#editor').html($('#editor').html()+""+imgs);
+													editor.appendHTML(imgs);
+													sarray.splice(0,sarray.length); 
+													//alert(sarray.length);
+													svalue="";
+													selecteds="";
+													gethtml('');
+													//alert(imgs);
+												}
+												
+												var editor;
+												$(pageInit);
+												function pageInit(){
+												    var allPlugin={
+												    		imgsel:{c:'testClassName',t:'从爱游相册中选取照片（支持快捷键ctrl+1）',s:'ctrl+1',e:function(){
+												                //var _this=this;
+												                //_this.saveBookmark();
+												                //_this.showModal('测试showModal接口','<div style="padding:5px;">模式窗口主体内容</div>',500,300);
+												    			$.jBox.open(html, '选择图片', 680, 610, { showIcon: false,buttons: { '确认选择': 1, },submit: function (v, h, f) {if(v==1){if(parent.sarray.length>0){parent.getimg();return true;}else{$.jBox.alert('请至少选择一张图片','上传图片提示',{showIcon: false});return false;}}},iframeScrolling:'no',persistent: true,showScrolling: true });
+												            }},
+												            map:{c:'btnMap',t:'插入Google地图',e:function(){
+												    			var _this=this;
+												    			_this.saveBookmark();
+												    			_this.showIframeModal('Google 地图','http://localhost:8080/iyoutianxia/xheditor/googlemap/googlemap.html',function(v){_this.loadBookmark();_this.pasteHTML('<img src="'+v+'" />');},538,404);
+												    		}}
+
+												    };
+												    editor=$('#preview').xheditor({skin:'vista',plugins:allPlugin,width:'720',height:'300',tools:'imgsel,Fontface,FontSize,Bold,Italic,Underline,Strikethrough,|,Align,Anchor,Link,Unlink,Hr,|,Emot,map,|,Fullscreen'});
+												}
+												
+												
+												var emojis = [
+												              "smile", "iphone", "girl", "smiley", "heart", "kiss", "copyright", "coffee",
+												              "a", "ab", "airplane", "alien", "ambulance", "angel", "anger", "angry",
+												              "arrow_forward", "arrow_left", "arrow_lower_left", "arrow_lower_right",
+												              "arrow_right", "arrow_up", "arrow_upper_left", "arrow_upper_right",
+												              "art", "astonished", "atm", "b", "baby", "baby_chick", "baby_symbol",
+												              "balloon", "bamboo", "bank", "barber", "baseball", "basketball", "bath",
+												              "bear", "beer", "beers", "beginner", "bell", "bento", "bike", "bikini",
+												              "bird", "birthday", "black_square", "blue_car", "blue_heart", "blush",
+												              "boar", "boat", "bomb", "book", "boot", "bouquet", "bow", "bowtie",
+												              "boy", "bread", "briefcase", "broken_heart", "bug", "bulb",
+												              "person_with_blond_hair", "phone", "pig", "pill", "pisces", "plus1",
+												              "point_down", "point_left", "point_right", "point_up", "point_up_2",
+												              "police_car", "poop", "post_office", "postbox", "pray", "princess",
+												              "punch", "purple_heart", "question", "rabbit", "racehorse", "radio",
+												              "up", "us", "v", "vhs", "vibration_mode", "virgo", "vs", "walking",
+												              "warning", "watermelon", "wave", "wc", "wedding", "whale", "wheelchair",
+												              "white_square", "wind_chime", "wink", "wink2", "wolf", "woman",
+												              "womans_hat", "womens", "x", "yellow_heart", "zap", "zzz", "+1",
+												              "-1"
+												          ]
+												          var names = ["Jacob","Isabella","Ethan","Emma","Michael","Olivia","Alexander","Sophia","William","Ava","Joshua","Emily","Daniel","Madison","Jayden","Abigail","Noah","Chloe"];
+
+												          var names = $.map(names,function(value,i) {
+												              return {'id':i,'name':value,'email':value+"@email.com"};
+												          });
+												          var emojis = $.map(emojis, function(value, i) {return {key: value, name:value}});
+												$(function(){
+													//alert($('#producttitle'));
+												    $inputor = $('#producttitle').atwho({
+												        at: "@",
+												        data: names,
+												        //data: "assets/data.json",
+												        tpl: "<li data-value='@${name}'>${name} <small>${email}</small></li>",
+												        callbacks: {
+												            before_save: function(data) {
+												            	//alert(data.names);
+												                return this.call_default("before_save", data.names);
+												            }
+												        }
+												    }).atwho({
+												        at: "#",
+												        data: names,
+												        tpl: "<li data-value='#${name}'> issues${id} from ${name}</li>"
+												    }).atwho({
+												        at: ":",
+												        data: emojis,
+												        tpl:"<li data-value=':${key}:'>${name} <img src='http://a248.e.akamai.net/assets.github.com/images/icons/emoji/${name}.png'  height='20' width='20' /></li>"
+												    });
+												    $inputor.caret('pos', 47);
+												    $inputor.focus().atwho('run');
+
+												    
+												
+												    $input = $('#producttitle');
+												    $corbox = $('.coordinate-box');
+												    $cursor = $('.cursor');
+
+												    function inputOffset() {
+												      var offset = $input.caret('offset');
+												      if(offset)
+												        resizeBox(offset);
+												      return offset
+												    }
+												    function editableOffset() {
+												      var offset = $editable.caret('offset');
+												      if (offset)
+												        resizeBox(offset);
+												      return offset
+												    }
+												    function resizeBox (offset) {
+												      $corbox.css({'width': offset.left, 'height': offset.top})
+												      $cursor.offset({left: offset.left, top: offset.top + offset.height + 2})
+												        .html("&nbsp; left: " + offset.left + ", " + "top: " + offset.top + "&nbsp;" + "height: " + offset.height);
+												    }
+												    //$input.on('focus keyup mouseup', function(){
+												    //  inputOffset();
+												   // });
+												    //$(window).resize(function() {
+												    //	alert("ddddddddddddddddddd")
+												     // if ($input.is(":focus"))
+												    //    inputOffset();
+												    //  else
+												   / //    editableOffset();
+												    //});
+												   // $input.caret('pos', 53).focus();
+												  });
+									      		</script>
+									      		
+</body>
+</html>

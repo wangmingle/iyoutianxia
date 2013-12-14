@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta/>
+<title>爱游天下-iyoutianxia</title>
+<meta name="description" content="Administry - Admin Template by www.865171.cn" />
+<meta name="keywords" content="Admin,Template" />
+<link rel="shortcut icon" type="image/png" HREF="../img/favicons/favicon.png"/>
+<link rel="icon" type="image/png" HREF="../img/favicons/favicon.png"/>
+<link rel="apple-touch-icon" HREF="../img/favicons/apple.png" />
+<link rel="stylesheet" href="../css/style.css" type="text/css" />
+<link rel="stylesheet" href="../css/custom.css" type="text/css" />
+<script type="text/javascript" SRC="../js/swfobject.js"></script>
+<script type="text/javascript" SRC="../js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" SRC="../js/jquery.ui.core.min.js"></script>
+<script type="text/javascript" SRC="../js/jquery.ui.widget.min.js"></script>
+<script type="text/javascript" SRC="../js/jquery.ui.tabs.min.js"></script>
+<script type="text/javascript" SRC="../js/jquery.tipTip.min.js"></script>
+<script type="text/javascript" SRC="../js/jquery.superfish.min.js"></script>
+<script type="text/javascript" SRC="../js/jquery.supersubs.min.js"></script>
+<script type="text/javascript" SRC="../js/jquery.validate_pack.js"></script>
+<script type="text/javascript" SRC="../js/jquery.nyroModal.pack.js"></script>
+<!-- Internet Explorer Fixes --> 
+<!--[if IE]>
+<link rel="stylesheet" type="text/css" media="all" href="css/ie.css"/>
+<script src="../js/html5.js"></script>
+<![endif]-->
+<!--Upgrade MSIE5.5-7 to be compatible with MSIE8: http://ie7-js.googlecode.com/svn/version/2.1(beta3)/IE8.js -->
+<!--[if lt IE 8]>
+<script src="../js/IE8.js"></script>
+<![endif]-->
+<script type="text/javascript">
+
+$(document).ready(function(){
+	
+	/* setup navigation, content boxes, etc... */
+	Administry.setup();
+	
+	// validate signup form on keyup and submit
+	var validator1 = $("#customform").validate({
+		rules: {
+			//account: "required",
+			//pwd: "required",
+			//password: "required",
+			//phone: "required",
+			//email: "required",
+			//name: "required"
+		},
+		messages: {
+			account: "请输入用户名",
+			pwd: "请输入密码",
+			password: "请输入确认密码",
+			phone: "请输入手机号",
+			email: "请输入邮箱",
+			name: "请输入姓名"
+		},
+		// the errorPlacement has to take the layout into account
+		errorPlacement: function(error, element) {
+			error.insertAfter(element.parent().find('label:first'));
+		},
+		// set new class to error-labels to indicate valid fields
+		success: function(label) {
+			// set &nbsp; as text for IE
+			label.html("&nbsp;").addClass("ok");
+			$("#customform").submit();
+		}
+	});
+	
+	// validate signup form on keyup and submit
+	var validator2 = $("#guideform").validate({
+		rules: {
+			//account: "required",
+			//pwd: "required",
+			//password: "required",
+			//phone: "required",
+			//email: "required",
+			//name: "required",
+			//idnumber: "required",
+			//idpic: "required",
+			//guidenumber: "required",
+			//guidecert: "required",
+			//guidecertpic: "required",
+		},
+		messages: {
+			account: "请输入用户名",
+			pwd: "请输入密码",
+			password: "请输入确认密码",
+			phone: "请输入手机号",
+			email: "请输入邮箱",
+			name: "请输入姓名",
+			idnumber: "请输入身份证号码",
+			idpic: "请上传身份证照片",
+			guidenumber: "请输入导游卡号码",
+			guidecert: "请输入导游资格证号码",
+			guidecertpic: "请上传导游资格证图片"
+		},
+		// the errorPlacement has to take the layout into account
+		errorPlacement: function(error, element) {
+			error.insertAfter(element.parent().find('label:first'));
+		},
+		// set new class to error-labels to indicate valid fields
+		success: function(label) {
+			// set &nbsp; as text for IE
+			label.html("&nbsp;").addClass("ok");
+			$("#guideform").submit();
+		}
+	});
+
+});
+
+function formchange(val,v){
+	if(val=="customdiv"){
+		document.getElementById("customdiv").style.display="block";
+		document.getElementById("guidediv").style.display="none";
+		document.getElementById("customli").className="current";
+		document.getElementById("guideli").className="";
+	}else{
+		document.getElementById("customdiv").style.display="none";
+		document.getElementById("guidediv").style.display="block";
+		document.getElementById("customli").className="";
+		document.getElementById("guideli").className="current";
+	}
+}
+</script>
+</head>
+<body>
+	<!-- Header -->
+	<header id="top">
+		<div class="wrapper-login">
+			<!-- Title/Logo - can use text instead of image -->
+			<div id="title"><a href="../iytx/"><img SRC="../img/logo.png" alt="Administry" /></a><!--<span>Administry</span> demo--></div>
+			<!-- Main navigation -->
+			<nav id="menu">
+				<ul class="sf-menu">
+					<li id="customli" ><a href="javascript: //;" onClick="formchange('customdiv');">普通用户注册</a></li>
+					<li id="guideli" class="current"><a href="javascript: //;" onClick="formchange('guidediv');">导游用户注册</a></li>
+				</ul>
+			</nav>
+			<!-- End of Main navigation -->
+			<!-- Aside links -->
+			<aside><b>中文</b> &middot; <a href="javascript: //;">英文</a> </aside>
+			<!-- End of Aside links -->
+		</div>
+	</header>
+	<!-- End of Header -->
+	<!-- Page title -->
+	<div id="pagetitle">
+		<div class="wrapper-login"></div>
+	</div>
+	<!-- End of Page title -->
+	
+	<!-- Page content -->
+	<div id="page">
+		<!-- Wrapper -->
+		<div id="customdiv" style="display: none;" class="wrapper-login">
+				<!-- Login form -->
+				<section class="full">					
+					
+					<h3>欢迎来到 爱游天下</h3>
+					
+					<div class="box box-info">注册请输入注册信息 * 为必填项</div>
+
+					<form id="customform" method="post" action="/register/1">
+						<input type="hidden" id="guideflag" value="2" name="guideflag"/>
+						<input type="hidden" id="register" value="true" name="register"/>
+						<p>
+							<label class="required" for="account">*用户名:</label><br/>
+							<input type="text" id="account" class="full" value="" name="account"/>
+						</p>
+						
+						<p>
+							<label class="required" for="pwd">*密码:</label><br/>
+							<input type="password" id="pwd" class="full" value="" name="pwd"/>
+						</p>
+						
+						<p>
+							<label class="required" for="password">*确认密码:</label><br/>
+							<input type="password" id="password" class="full" value="" name="password"/>
+						</p>
+						
+						<p>
+							<label class="required" for="name">*姓名:</label><br/>
+							<input type="text" id="name" class="full" value="" name="name"/>
+						</p>
+						
+						<p>
+							<label class="required" for="email">邮箱:</label><br/>
+							<input type="text" id="email" class="full" value="" name="email"/>
+						</p>
+						
+						<p>
+							<label class="required" for="phone">手机:</label><br/>
+							<input type="text" id="phone" class="full" value="" name="phone"/>
+						</p>
+						
+						<p>
+							<input type="submit" class="btn btn-green big" value="完成注册"/> &nbsp; <a href="login">我已注册</a> or <a href="javascript: //;">帮助?</a>
+						</p>
+						
+						<div class="clear">&nbsp;</div>
+						
+						<p>
+							<input type="submit" class="btn btn-green big" value="使用QQ账号快速登录"/> 
+						</p>
+						
+						<div class="clear">&nbsp;</div>
+					</form>
+					
+				</section>
+				<!-- End of login form -->
+				
+		</div>
+		
+		
+		<div id="guidediv" class="wrapper-login">
+				<!-- Login form -->
+				<section class="full">					
+					
+					<h3>欢迎来到 爱游天下</h3>
+					
+					<div class="box box-info">请继续完善注册信息</div>
+					
+					<form id="guideform" method="post" action="/register/${id }" enctype="multipart/form-data">
+						<input type="hidden" id="guideflag" value="1" name="guideflag"/>
+						<input type="hidden" id="register" value="true" name="register"/>
+						
+						<p>
+							<label class="required" for="idpic">*身份证图片:</label><br/>
+							<input type="file" id="idpic" class="full" value="" name="idpic"/>
+						</p>
+						
+						<p>
+							<label class="required" for="guidecertpic">*导游资格证图片:</label><br/>
+							<input type="file" id="guidecertpic" class="full" value="" name="guidecertpic"/>
+						</p>
+						
+						<p>
+							<input type="submit" class="btn btn-green big" value="完成注册"/> &nbsp; <a href="/login">我已注册</a> or <a href="#">帮助?</a>
+						</p>
+						
+						<div class="clear">&nbsp;</div>
+					</form>
+					
+				</section>
+				<!-- End of login form -->
+				
+		</div>
+		<!-- End of Wrapper -->
+	</div>
+	<!-- End of Page content -->
+	
+	<!-- Page footer -->
+	<footer id="bottom">
+		<div class="wrapper-login">
+			<p>Copyright &copy; 2013 <b><a HREF="http://www.iyoutianxia.com" title="www.iyoutianxia.com">www.iyoutianxia.com</a></b></p>
+		</div>
+	</footer>
+	<!-- End of Page footer -->
+
+<!-- User interface javascript load -->
+<script type="text/javascript" SRC="../js/administry.js"></script>
+</body>
+</html>

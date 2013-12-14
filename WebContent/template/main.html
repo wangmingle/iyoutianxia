@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>爱游天下-iyoutianxia</title>
+<meta name="description" content="Administry - Admin Template by www.865171.cn" />
+<meta name="keywords" content="Admin,Template" />
+<!-- Favicons --> 
+<link rel="shortcut icon" type="image/png" HREF="../img/favicons/favicon.png"/>
+<link rel="icon" type="image/png" HREF="../img/favicons/favicon.png"/>
+<link rel="apple-touch-icon" HREF="../img/favicons/apple.png" />
+<!-- Main Stylesheet --> 
+<link rel="stylesheet" href="../css/style.css" type="text/css" />
+<!-- Colour Schemes
+Default colour scheme is blue. Uncomment prefered stylesheet to use it.
+<link rel="stylesheet" href="../css/brown.css" type="text/css" media="screen" />  
+<link rel="stylesheet" href="../css/gray.css" type="text/css" media="screen" />  
+<link rel="stylesheet" href="../css/green.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/pink.css" type="text/css" media="screen" />  
+<link rel="stylesheet" href="../css/red.css" type="text/css" media="screen" />
+-->
+<!-- Your Custom Stylesheet --> 
+<link rel="stylesheet" href="../css/custom.css" type="text/css" />
+<!--swfobject - needed only if you require <video> tag support for older browsers -->
+<script type="text/javascript" SRC="../js/swfobject.js"></script>
+<!-- jQuery with plugins -->
+<script type="text/javascript" SRC="../js/jquery-1.4.2.min.js"></script>
+<!-- Could be loaded remotely from Google CDN : <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> -->
+<script type="text/javascript" SRC="../js/jquery.ui.core.min.js"></script>
+<script type="text/javascript" SRC="../js/jquery.ui.widget.min.js"></script>
+<script type="text/javascript" SRC="../js/jquery.ui.tabs.min.js"></script>
+<!-- jQuery tooltips -->
+<script type="text/javascript" SRC="../js/jquery.tipTip.min.js"></script>
+<!-- Superfish navigation -->
+<script type="text/javascript" SRC="../js/jquery.superfish.min.js"></script>
+<script type="text/javascript" SRC="../js/jquery.supersubs.min.js"></script>
+<!-- jQuery form validation -->
+<script type="text/javascript" SRC="../js/jquery.validate_pack.js"></script>
+<!-- jQuery popup box -->
+<script type="text/javascript" SRC="../js/jquery.nyroModal.pack.js"></script>
+<!-- Internet Explorer Fixes --> 
+<!--[if IE]>
+<link rel="stylesheet" type="text/css" media="all" href="../css/ie.css"/>
+<script src="../js/html5.js"></script>
+<![endif]-->
+<!--Upgrade MSIE5.5-7 to be compatible with MSIE8: http://ie7-js.googlecode.com/svn/version/2.1(beta3)/IE8.js -->
+<!--[if lt IE 8]>
+<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta3)/IE8.js"></script>
+<![endif]-->
+
+<style type="text/css">
+ *{ margin:0; padding:0}
+
+/*-插件样式*/
+.myScroll {
+	width:100%;
+	height:185px;
+	overflow:hidden;
+	zoom:1;
+}
+.myScroll p {
+	width:20px;
+	height:170px;
+	background-image:url(icon.gif);
+	background-repeat:no-repeat;
+	cursor:pointer
+}
+.myPrevBtn {
+	background-position:left center;
+	float:left;
+	display:inline
+}
+.myNextBtn {
+	background-position:right center;
+	float:right;
+	display:inline
+}
+.myBlock {
+	overflow:hidden;
+	float:left;
+	display:inline
+}
+.myBlock ul {
+	width:100%;
+	overflow:hidden;
+	zoom:1;
+	list-style:none
+}
+.myBlock ul li {
+	width:150px;
+	float:left;
+	padding:0px 0;
+	display:inline
+}
+.myBlock ul li:hover {
+	background-color:#FFC
+}
+.myBlock dl {
+	width:150px;
+	margin:0 auto;
+	list-style:none;
+}
+.myBlock dl dt {
+	width:140px;
+	height:140px;
+	overflow:hidden;
+	background-color:#FFF
+}
+.myBlock dl dt img {
+	width:130px;
+	height:130px
+}
+.myBlock dl dd {
+	line-height:10px;
+	list-style:none;
+	text-align:center
+}
+.myBlock dl dd a {
+	display:inline-block;
+	padding:3px 0;
+	width:100%;
+}
+.myClone {
+	overflow:hidden;
+	zoom:1
+}
+.myClone ul {
+	float:left;
+	display:inline
+}
+#slideshow {
+	margin:0;
+	padding-top:10px;
+	padding:0px;
+	position:relative;
+	border:5px solid #fff;
+	-webkit-box-shadow:0 3px 5px #999;
+	-moz-box-shadow:0 3px 5px #999;
+	box-shadow:0 3px 5px #999;
+}
+
+#slideshow ul {
+	position:relative;
+	overflow:hidden;
+	margin:0;
+	padding:0;
+}
+
+#slideshow ul li {
+	position:absolute;
+	top:0;
+	left:0;
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+
+#pagination {
+	clear:both;
+	width:75px;
+	margin:25px auto 0;
+	padding:0;
+}
+
+#pagination li {
+	list-style:none;
+	float:left;
+	margin:0 2px;
+}
+
+#pagination li a {
+	display:block;
+	width:10px;
+	height:10px;
+	text-indent:-10000px;
+	background:url(../images/pagination.png);
+}
+
+#pagination li a.active {
+	background-position:0 10px;
+}
+
+.caption {
+	width:100%;
+	margin:0;
+	padding:10px;
+	position:absolute;
+	left:0;
+	font-family:Helvetica, Arial, sans-serif;
+	font-size:14px;
+	font-weight:lighter;
+	color:#fff;
+	border-top:1px solid #000;
+	background:#000;
+	background:rgba(0,0,0,0.6);
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+	filter: alpha(opacity=60);
+}
+
+#box{width:150px; height:200px;background-color:#E1F1FF;position:fixed;_position:absolute; top:100px; left:0px;}
+
+</style>
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	/* setup navigation, content boxes, etc... */
+	Administry.setup();
+	
+	/* tabs */
+	$("#tabs, #tabs2").tabs();
+	
+	/* progress bar animations - setting initial values */
+	Administry.progress("#progress1", 10, 100);
+	Administry.progress("#progress2", 25, 100);
+	Administry.progress("#progress3", 50, 100);
+	
+	/* <video> support for older browsers through flash player embedding */
+	Administry.videoSupport('video-flash', 'video/video.f4v', 320, 240);
+
+});
+
+ (function($)
+{
+  $.fn.myScroll = function(options)
+  {
+
+    //默认配置
+    var defaults = {
+      auto: [false, 3000],
+      //是否自动滚动,第二个参数是自动滚动是切换的间隔时间
+      visible: 4,
+      //可显示的数量
+      speed: 1000,
+      //动画时间，可选slow，fast，数值类
+      scroll: 1 //每次切换的个数,此数小于等于visible值
+    };
+
+    var opts = $.extend(
+    {}, defaults, options);
+    opts.scroll = opts.scroll > opts.visible ? opts.visible : opts.scroll;
+
+    this.each(function(i)
+    {
+
+      var prevBtn = $(this).find("p.myPrevBtn"),
+          nextBtn = $(this).find("p.myNextBtn"),
+          block = $(this).find("div.myBlock"),
+          innerBlock = block.find("ul"),
+          list = block.find('ul>li'),
+          listNum = list.size(),
+          listWidth = list.width(),
+          blockWidth = listWidth * opts.visible,
+          ntervalId;
+
+      //设置宽度样式
+    $(this).width(blockWidth + prevBtn.width() + nextBtn.width());
+      block.width(blockWidth).find("ul").width(listWidth * listNum);
+
+      //获取已滚动个数
+
+      function getSnum()
+      {
+        return (parseInt(innerBlock.css("margin-left")) * -1) / listWidth;
+      }
+
+      //获取滚动的距离
+
+      function getMove(c)
+      {
+        return c >= opts.scroll ? opts.scroll * listWidth : c * listWidth;
+      }
+
+      //单击向前按钮
+      prevBtn.click(function()
+      {
+        var snum = getSnum(),
+            c = listNum - snum - opts.visible,
+            m = getMove(c);
+
+        if (listNum - snum > opts.visible)
+        {
+          innerBlock.animate(
+          {
+            "margin-left": "-=" + m
+          }, opts.speed);
+        }
+      });
+
+      //单击向后按钮
+      nextBtn.click(function()
+      {
+        var snum = getSnum(),
+            m = getMove(snum);
+
+        if (snum > 0)
+        {
+          innerBlock.animate(
+          {
+            "margin-left": "+=" + m
+          }, opts.speed);
+        }
+      });
+
+      //如果自动滚动
+      if (opts.auto[0])
+      {
+
+        $(this).width(blockWidth);
+        prevBtn.hide();
+        nextBtn.hide();
+
+        function auto()
+        {
+          var snum = getSnum(),
+              m = getMove(listNum - snum - opts.visible);
+
+          if (listNum - snum > opts.visible)
+          {
+            innerBlock.animate(
+            {
+              "margin-left": "-=" + m
+            }, opts.speed);
+          }
+          else
+          {
+            innerBlock.css("margin-left", 0).find('li').slice(0, listNum - opts.visible).appendTo(innerBlock);
+          }
+        }
+
+        //当鼠标经过滚动区域停止滚动
+    block.hover(function()
+        {
+          clearInterval(intervalId);
+        }, function()
+        {
+          intervalId = setInterval(auto, opts.auto[1] + Math.abs(opts.speed - opts.auto[1]) + 100);
+        }).trigger('mouseleave');
+
+      }
+
+    });
+
+  };
+	$.fn.craftyslide = function (options) {
+
+        // Defaults
+        var defaults = {
+            "width": 600,
+            "height": 300,
+            "pagination": true,
+            "fadetime": 350,
+            "delay": 5000
+        };
+
+        var options = $.extend(defaults, options);
+
+        return this.each(function () {
+
+            // Vars
+            var $this = $(this);
+            var $slides = $this.find("ul li");
+
+            $slides.not(':first').hide();
+
+            // Pagination
+            function paginate() {
+                $this.append("<ol id='pagination' />");
+                
+                var i = 1;
+                $slides.each(function () {
+                    $(this).attr("id", "slide" + i);
+                    $("#pagination")
+                    .append("<li><a href='#slide" + i + "'>" + i + "</a></li>");
+                    i++;
+                });
+                
+                $("#pagination li a:first").addClass("active");
+            }
+
+            // Add captions
+            function captions() {
+                $slides.each(function () {
+                    $caption = $(this).find("img").attr("title");
+                    if ($caption !== undefined) {
+                        $(this).prepend("<p class='caption'><a href='http://www.baidu.com' target='_blank'>" + $caption + "</a></p>");
+                    }
+                    $slides.filter(":first").find(".caption").css("bottom", 0);
+                });
+            }
+
+            // Manual mode
+            function manual() {
+                var $pagination = $("#pagination li a");
+                $pagination.click(function (e) {
+                    e.preventDefault();
+                    var $current = $(this.hash);
+                    if ($current.is(":hidden")) {
+                        $slides.fadeOut(options.fadetime);
+                        $current.fadeIn(options.fadetime);
+                        $pagination.removeClass("active");
+                        $(this).addClass("active");
+                        $(".caption").css("bottom", "-37px");
+                        $current.find(".caption").delay(300).animate({
+                            bottom: 0
+                        }, 300);
+                    }
+                });
+            }
+
+            // Auto mode
+            function auto() {
+                setInterval(function () {
+                    $slides.filter(":first-child")
+                    .fadeOut(options.fadetime)
+                    .next("li")
+                    .fadeIn(options.fadetime)
+                    .end()
+                    .appendTo("#slideshow ul");
+
+                    $slides.each(function () {
+                        if ($slides.is(":visible")) {
+                            $(".caption").css("bottom", "-37px");
+                            $(this).find(".caption").delay(300).animate({
+                                bottom: 0
+                            }, 300);
+                        }
+                    });
+
+                }, options.delay);
+            }
+
+            // Width
+            $this.width(options.width);
+            $this.find("ul, li img").width(options.width);
+
+            // Height
+            $this.height(options.height);
+            $this.find("ul, li").height(options.height);
+
+            // Check Boolean values
+            if (options.pagination === true) {
+                paginate();
+            } else {
+                auto();
+            }
+
+            captions(); manual();
+
+        });
+    };
+})(jQuery);
+
+
+//自动滚动
+//$("#product").myScroll({
+//								   visible:4,
+//								   scroll:3,
+//								   auto:[true,2000],
+//								   speed:1000
+//								   });
+// 			});  
+</script>
+</head>
+<body>
+	<!-- Header -->
+	<!-- #include /header.html -->
+	<!-- End of Header -->
+	<!-- Page title -->
+	<div id="pagetitle">
+		<div class="wrapper">
+			<h1>首页</h1>
+			<!-- Quick search box -->
+			<form action="" method="get"><input class="" type="text" id="q" name="q" /></form>
+		</div>
+	</div>
+	<!-- End of Page title -->
+	
+	<!-- Page content -->
+	<div id="page">
+		<!-- Wrapper -->
+		<div class="wrapper">
+				<!-- Left column/section -->
+				<section class="column width6 first">	
+					<section id="main" style="padding-top:20px;">
+			          <div id="slideshow">
+			            <ul>
+			              <li>
+			                <a target="_blank" href="http://www.baidu.com;"><img src="http://farm6.static.flickr.com/5270/5627221570_afdd85f16a_z.jpg" alt="" title="Light Trails" /></a>
+			              </li>
+			              
+			              <li>
+			                <a href="http: //;"><img src="http://farm6.static.flickr.com/5146/5627204218_b83b2d25d6_z.jpg" alt="" title="Bokeh" /></a>
+			              </li>
+			              
+			              <li>           
+			                <a href="http: //;"><img style="cusor:hand;" onclick="javascript:window.open('http://www.baidu.com');" src="http://farm6.static.flickr.com/5181/5626622843_783739c864_z.jpg" alt="" title="Blossoms" /></a>
+			              </li>
+			              
+			              <li>           
+			                <a href="http: //;"><img src="http://farm6.static.flickr.com/5183/5627213996_915aa49939_z.jpg" alt="" title="Funky Painting" /></a>
+			              </li>
+			              
+			              <li>           
+			                <a href="http: //;"><img src="http://farm6.static.flickr.com/5182/5626649425_fde8610329_z.jpg" alt="" title="Vintage Chandelier" /></a>
+			              </li>	                         
+			            </ul>
+			          </div>  
+			          </br>
+			        </section>
+			        
+					<h3>推荐导游</h3>
+					<span >全部, 北京, 香格里拉,...</span>
+					<span style="margin-left: 570px;"><a href="javascript:document.getElementById('hyp').submit();">换一批</a></span>
+					<form action="/" id="hyp" method="post">
+						<input type="hidden" name="page" value="${page }">
+					</form>
+					<hr/>
+					<div class="colgroup leading">
+					<!-- #if null!= ${guideList } -->
+						<!-- #for guide : ${guideList} -->
+							<!-- #if ${guide.rownum} == 0 -->
+							<div class="column width2 first"  style="width: 133px;">
+								<div class="code" height="150px">
+									<img src="../upload/usr/photo/small_${guide.photo }" height="130px" width="120px" />
+								</div>
+								<p class="ta-left">
+									${guide.name }${guide.rownum}
+								</p>
+							</div>
+							<!-- #else -->
+							<div class="column width2"  style="width: 133px;">
+								<div class="code" height="150px">
+									<img src="../upload/usr/photo/small_${guide.photo }" height="130px" width="120px" />
+								</div>
+								<p class="ta-left">
+									${guide.name }${guide.rownum}
+								</p>
+							</div>
+							<!-- #end -->
+						<!-- #end -->
+						<!-- #end -->
+					</div>		
+					<h3>热门线路</h3>
+					<hr/>
+					<div class="myScroll" id="product">
+					  <p class="myPrevBtn"></p>
+					  <p class="myNextBtn"></p>
+					  <div class="myBlock">
+					    <ul>
+					      <li>
+					        <dl>
+					          <dt><a href="http://www.muzilei.com/"><img src="http://img01.taobaocdn.com/bao/uploaded/i1/T1Dj1KXlhhXXcD9vg8_100353.jpg_160x160.jpg" alt="" /></a></dt>
+					          <dd><a href="http://www.muzilei.com/">限时5折 入耳式动圈音乐耳机 全国联保 包邮</a></dd>
+					        </dl>
+					      </li>
+					      <li>
+					        <dl>
+					          <dt><a href="http://www.muzilei.com/"><img src="http://img03.taobaocdn.com/bao/uploaded/i3/T1CiKuXfFGXXaNIOzX_085531.jpg_160x160.jpg" alt="" /></a></dt>
+					          <dd><a href="http://www.muzilei.com/">电脑头戴式耳机带耳麦 正品行货 音质澎湃</a></dd>
+					        </dl>
+					      </li>
+					      <li>
+					        <dl>
+					          <dt><a href="http://www.muzilei.com/"><img src="http://img03.taobaocdn.com/bao/uploaded/i3/T1aruHXidhXXaE3eQ._112119.jpg_160x160.jpg" alt="" /></a></dt>
+					          <dd><a href="http://www.muzilei.com/">RAPOO 雷柏 H6060 蓝牙无线耳机 舒适护耳式</a></dd>
+					        </dl>
+					      </li>
+					      <li>
+					        <dl>
+					          <dt><a href="http://www.muzilei.com/"><img src="http://img03.taobaocdn.com/bao/uploaded/i3/T1aruHXidhXXaE3eQ._112119.jpg_160x160.jpg" alt="" /></a></dt>
+					          <dd><a href="http://www.muzilei.com/">RAPOO 雷柏 H6060 蓝牙无线耳机 舒适护耳式</a></dd>
+					        </dl>
+					      </li>
+					      <li>
+					        <dl>
+					          <dt><a href="http://www.muzilei.com/"><img src="http://img03.taobaocdn.com/bao/uploaded/i3/T1aruHXidhXXaE3eQ._112119.jpg_160x160.jpg" alt="" /></a></dt>
+					          <dd><a href="http://www.muzilei.com/">RAPOO 雷柏 H6060 蓝牙无线耳机 舒适护耳式</a></dd>
+					        </dl>
+					      </li>
+					      <li>
+					        <dl>
+					          <dt><a href="http://www.muzilei.com/"><img src="http://img03.taobaocdn.com/bao/uploaded/i3/T1aruHXidhXXaE3eQ._112119.jpg_160x160.jpg" alt="" /></a></dt>
+					          <dd><a href="http://www.muzilei.com/">RAPOO 雷柏 H6060 蓝牙无线耳机 舒适护耳式</a></dd>
+					        </dl>
+					      </li>
+					      <li>
+					        <dl>
+					          <dt><a href="http://www.muzilei.com/"><img src="http://img03.taobaocdn.com/bao/uploaded/i3/T1aruHXidhXXaE3eQ._112119.jpg_160x160.jpg" alt="" /></a></dt>
+					          <dd><a href="http://www.muzilei.com/">RAPOO 雷柏 H6060 蓝牙无线耳机 舒适护耳式</a></dd>
+					        </dl>
+					      
+					    </ul>
+					  </div>
+					</div>
+					
+					<h3>热门拼团</h3>
+					<span class="subtitle">限时拼团中，请尽快预定</span>
+					<hr/>
+					
+					<div class="leading clearfix">
+						<div class="column width3 first">
+
+							<b>状态：火拼中</b>
+							<div class="content-box corners" style="height:250px;">
+								<header>
+									<h3><img SRC="../img/information.png" alt="" />丽江...五日游 &nbsp;&nbsp;&nbsp;<a href="">张三</a>带团</h3>
+								</header>
+								<section>
+									<p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. 
+									<table class="no-style full">
+										<tbody>
+											<tr>
+												<td><b>Users</b></td>
+												<td class="ta-right">11</td>
+											</tr>
+											<tr>
+												<td><b>Posts</b></td>
+												<td class="ta-right">22</td>
+											</tr>
+											<tr>
+												<td><b>Comments</b></td>
+												<td class="ta-right">332</td>
+											</tr>
+										</tbody>
+									</table>
+								</section>
+							</div>
+							
+						</div>
+						
+						<div class="column width3">
+
+							<b>状态：火拼中</b>
+							<div class="content-box corners" style="height:250px;">
+								<header>
+									<h3><img SRC="../img/information.png" alt="" />西藏...十日游 &nbsp;&nbsp;&nbsp;<a href="">李四</a>带团</h3>
+								</header>
+								<section>
+									<p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacu
+									<table class="no-style full">
+										<tbody>
+											<tr>
+												<td><b>Users</b></td>
+												<td class="ta-right">11</td>
+											</tr>
+											<tr>
+												<td><b>Posts</b></td>
+												<td class="ta-right">22</td>
+											</tr>
+											<tr>
+												<td><b>Comments</b></td>
+												<td class="ta-right">332</td>
+											</tr>
+										</tbody>
+									</table>
+								</section>
+							</div>
+							
+						</div>
+						
+						<div class="column width3 first">
+							<b>状态：即将开团</b>
+							<div class="content-box corners" style="height:250px;">
+								<header>
+									<h3><img SRC="../img/information.png" alt="" />丽江...五日游 &nbsp;&nbsp;&nbsp;<a href="">张三</a>带团</h3>
+								</header>
+								<section>
+									<p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi
+									<table class="no-style full">
+										<tbody>
+											<tr>
+												<td><b>Users</b></td>
+												<td class="ta-right">11</td>
+											</tr>
+											<tr>
+												<td><b>Posts</b></td>
+												<td class="ta-right">22</td>
+											</tr>
+											<tr>
+												<td><b>Comments</b></td>
+												<td class="ta-right">332</td>
+											</tr>
+										</tbody>
+									</table>
+								</section>
+							</div>
+							
+						</div>
+						
+						<div class="column width3">
+
+							<b>状态：即将开团</b>
+							<div class="content-box corners" style="height:250px;">
+								<header>
+									<h3><img SRC="../img/information.png" alt="" />西藏...十日游 &nbsp;&nbsp;&nbsp;<a href="">李四</a>带团</h3>
+								</header>
+								<section>
+									<p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa
+									<table class="no-style full">
+										<tbody>
+											<tr>
+												<td><b>Users</b></td>
+												<td class="ta-right">11</td>
+											</tr>
+											<tr>
+												<td><b>Posts</b></td>
+												<td class="ta-right">22</td>
+											</tr>
+											<tr>
+												<td><b>Comments</b></td>
+												<td class="ta-right">332</td>
+											</tr>
+										</tbody>
+									</table>
+								</section>
+							</div>
+							
+						</div>
+						
+						
+						
+					</div>
+					
+				
+					<h3>Popup boxes</h3>
+					<span class="subtitle">A quick way to show data without reloading the entire page</span>
+					<hr/>
+					<form method="post" action="/notes/test" class="nyroModal">
+  <input type="text" name="wouhou" />
+  <input type="submit" value="simple form"/>
+</form>
+<form method="post" action="http://nyromodal.nyrodev.com/demoSent.php" class="nyroModal" target="_blank">
+  <input type="text" name="wouhou" />
+  <input type="submit" value="simple form in iframe"/>
+</form>
+<form method="post" action="http://nyromodal.nyrodev.com/demoSent.php#test" class="nyroModal">
+  <input type="text" name="wouhou" />
+  <input type="submit" value="simple form Filtering Content"/>
+</form>
+					<p>
+						<a HREF="styles.html#foobar" class="nyroModal" title="Inline Content Demo">Inline content (div#foobar)</a><br />
+						<a id="dd" HREF="index.html?id=dkjfdkfjdkj" class="nyroModal" title="AJAX Content Demo">Remote content (ajaxdemo.html)</a> &middot; <a HREF="ajaxdemo.html" class="nyroModal" title="AJAX Content Demo" rev="modal">Remote modal content (ajaxdemo.html)</a><br />
+						<a HREF="http://www.865171.cn" class="nyroModal" title="YouTube Video Demo">YouTube Video</a><br />
+						<a HREF="../img/gallery/book01.jpg" class="nyroModal" title="Book" rel="gal">Gallery Img 1</a> &middot;
+						<a HREF="../img/gallery/card01.jpg" class="nyroModal" title="Card" rel="gal">Gallery Img 2</a> &middot;
+						<a HREF="../img/gallery/leaflet01.jpg" class="nyroModal" title="Leaflet" rel="gal">Gallery Img 3</a>
+					</p>
+					<p>For more detailed samples and demos visit <a HREF="../../nyromodal.nyrodev.com/index.htm">nyroModal homepage</a>.</p>
+					<div id='foobar' style='display: none;'>This is an inline content</div>
+
+					<h3>Forms</h3>
+					<span class="subtitle">Selecting different kinds of user input</span>
+					<hr/>
+					
+					<p>To see the detailed presentation <a HREF="forms.html" title="Forms">click here</a>.</p>
+					
+					<p>&nbsp;</p>
+				
+				</section>
+				<!-- End of Left column/section -->
+				
+				<!-- Right column/section -->
+				<aside class="column" style="width:234px">
+					<div id="rightmenu">
+						<header>
+							<h3>新闻动态</h3>
+						</header>
+						<dl class="first">
+							<dt><img width="16" height="16" alt="" SRC="../img/key.png"></dt>
+							<dd><a href="#">Nunc tincidunt</a></dd>
+							<dd class="last">Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus.</dd>
+							
+							<dt><img width="16" height="16" alt="" SRC="../img/delete.png"></dt>
+							<dd><a href="#">Proin dolor</a></dd>
+							<dd class="last">Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc.</dd>
+							
+							<dt><img width="16" height="16" alt="" SRC="../img/add.png"></dt>
+							<dd><a href="#">Aenean lacinia</a></dd>
+							<dd class="last">Mauris eleifend est et turpis.</dd>
+						</dl>
+					</div>
+					<div class="content-box">
+						<header>
+							<h3>快速链接</h3>
+						</header>
+						<section>
+							<dl>
+								<dt>Lorem ipsum</dt>
+								<dd>Lorem ipsum dolor sit amet.</dd>
+								<dt>Lorem ipsum</dt>
+								<dd>Lorem ipsum dolor sit amet.</dd>
+								<dt>Lorem ipsum</dt>
+								<dd>Lorem ipsum dolor sit amet.</dd>
+							</dl>
+						</section>
+					</div>
+				</aside>
+				<!-- End of Right column/section -->
+				
+		</div>
+		<!-- End of Wrapper -->
+	</div>
+	<!-- End of Page content -->
+	
+	<!-- Page footer -->
+	<footer id="bottom">
+		<div class="wrapper">
+			<nav>
+				<a href="#">Dashboard</a> &middot;
+				<a href="#">Content</a> &middot;
+				<a href="#">Reports</a> &middot;
+				<a href="#">Users</a> &middot;
+				<a href="#">Media</a> &middot;
+				<a href="#">Events</a> &middot;
+				<a href="#">Newsletter</a> &middot;
+				<a href="#">Settings</a>
+			</nav>
+			<p>Copyright &copy; 2010 <b><a HREF="http://www.865171.cn" title="www.865171.cn">www.865171.cn</a></b> | Icons by <a HREF="http://www.865171.cn">865171.cn</a></p>
+		</div>
+	</footer>
+	<!-- End of Page footer -->
+	
+	<!-- Animated footer -->
+	<footer id="animated">
+		<ul>
+			<li><a href="#">Dashboard</a></li>
+			<li><a href="#">Content</a></li>
+			<li><a href="#">Reports</a></li>
+			<li><a href="#">Users</a></li>
+			<li><a href="#">Media</a></li>
+			<li><a href="#">Events</a></li>
+			<li><a href="#">Newsletter</a></li>
+			<li><a href="#">Settings</a></li>
+		</ul>
+	</footer>
+	<!-- End of Animated footer -->
+	
+	<!-- Scroll to top link -->
+	<a href="#" id="totop">^ scroll to top</a>
+
+<!-- Admin template javascript load -->
+<script type="text/javascript" SRC="../js/administry.js"></script></body>
+<script type="text/javascript">
+//手动滚动
+$("#product").myScroll({
+	    visible:5,
+		scroll:1,
+		auto:[true,2000],
+		speed:1000
+		});
+$("#slideshow").craftyslide({
+  'width': 730,
+  'height': 280,
+  'pagination': false,
+  'fadetime': 500,
+  'delay': 2500
+});
+</script>
+</html>

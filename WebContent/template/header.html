@@ -1,0 +1,95 @@
+<header id="top">
+		<div class="wrapper">
+			<!-- Title/Logo - can use text instead of image -->
+			<div id="title"><a href="../iytx/"><img SRC="../img/logo.png" alt="iyoutianxia" /></a><!--<span>Administry</span> demo--></div>
+			<!-- Top navigation -->
+			<div id="topnav">
+				<!-- #if null != ${user} -->
+				<a href="javascript: //;"><img class="avatar" SRC="../upload/usr/photo/small_${user.photo }" width="32px" height="32px" alt="${user.name }" /></a>
+				欢迎您 <b>${user.name }</b>
+				<span>|</span> <a href="out">退出</a><br />
+				<small>您有 <a href="javascript: //;" class="high"><b>0</b> 新消息!</a></small>
+				<!-- #else -->
+				<a href="login">登录</a>
+				<span>|</span> <a href="register">注册</a>
+				<!-- #end -->
+			</div>
+			<!-- End of Top navigation -->
+			<!-- Main navigation -->
+			<nav id="menu">
+				<ul class="sf-menu">
+					<li class="current"><a HREF="">首页</a></li>
+					<li>
+						<a HREF="javascript: //;">社区</a>
+						<ul>
+							<li>
+								<a href="javascript: //;">游记</a>
+								<ul>
+									<li><a HREF="notes">游记</a></li>
+									<li><a HREF="javascript: //;">游记话题</a></li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a HREF="javascript: //;">导游</a>
+						<ul>
+							<li>
+								<a href="javascript: //;">北京</a>
+								<ul>
+									<li><a HREF="javascript: //;">全地区</a></li>
+								</ul>
+							</li>
+							<li>
+								<a href="javascript: //;">云南</a>
+								<ul>
+									<li><a HREF="javascript: //;">丽江</a></li>
+									<li><a HREF="javascript: //;">香格里拉</a></li>
+									<li><a HREF="javascript: //;">西双版纳</a></li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a HREF="javascript: //;">行程</a>
+						<ul>
+							<li>
+								<a href="route">热门行程</a>
+							</li>
+						</ul>
+					</li>
+					<li><a HREF="javascript: //;">旅游</a></li>
+					<li><a HREF="javascript: //;">驴游</a></li>	
+					<li><a HREF="javascript: //;">攻略</a></li>
+					<li><a HREF="javascript: //;">活动</a></li>	
+					
+					<!-- #if null != ${user} -->
+					<li><a HREF="album">相册</a></li>
+					<li>
+						<a HREF="javascript: //;">个人中心</a>
+						<ul>
+							<li>
+								<a href="p">我的信息</a>
+							</li>
+							<li>
+								<a href="myroute">我的行程</a>
+							</li>
+						</ul>
+					</li>
+					<!-- #end -->
+				</ul>
+			</nav>
+			<!-- End of Main navigation -->
+			<!-- Aside links -->
+			<!--<aside><b>中文</b> &middot; <a href="#">英文</a></aside>
+			-->
+			
+			<!-- End of Aside links -->
+		</div>
+		
+		<div id="box"></div>
+		<script type="text/javascript">
+			
+		</script>
+	</header>
+	

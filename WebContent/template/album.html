@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Admin Template by www.865171.cn</title>
+<meta name="description" content="Administry - Admin Template by www.865171.cn" />
+<meta name="keywords" content="Admin,Template" />
+<!-- Favicons --> 
+<link rel="shortcut icon" type="image/png" HREF="../img/favicons/favicon.png"/>
+<link rel="icon" type="image/png" HREF="../img/favicons/favicon.png"/>
+<link rel="apple-touch-icon" HREF="../img/favicons/apple.png" />
+<!-- Main Stylesheet --> 
+<link rel="stylesheet" href="../css/style.css" type="text/css" />
+<!-- Colour Schemes
+Default colour scheme is blue. Uncomment prefered stylesheet to use it.
+<link rel="stylesheet" href="../css/brown.css" type="text/css" media="screen" />  
+<link rel="stylesheet" href="../css/gray.css" type="text/css" media="screen" />  
+<link rel="stylesheet" href="../css/green.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/pink.css" type="text/css" media="screen" />  
+<link rel="stylesheet" href="../css/red.css" type="text/css" media="screen" />
+-->
+<!-- Your Custom Stylesheet --> 
+<link rel="stylesheet" href="../css/custom.css" type="text/css" />
+<!--swfobject - needed only if you require <video> tag support for older browsers -->
+<script type="text/javascript" SRC="../js/swfobject.js"></script>
+<!-- jQuery with plugins -->
+<script type="text/javascript" SRC="../js/jquery-1.4.2.min.js"></script>
+<!-- Could be loaded remotely from Google CDN : <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> -->
+<script type="text/javascript" SRC="../js/jquery.ui.core.min.js"></script>
+<script type="text/javascript" SRC="../js/jquery.ui.widget.min.js"></script>
+<script type="text/javascript" SRC="../js/jquery.ui.tabs.min.js"></script>
+<!-- jQuery tooltips -->
+<script type="text/javascript" SRC="../js/jquery.tipTip.min.js"></script>
+<!-- Superfish navigation -->
+<script type="text/javascript" SRC="../js/jquery.superfish.min.js"></script>
+<script type="text/javascript" SRC="../js/jquery.supersubs.min.js"></script>
+<!-- jQuery popup box -->
+<script type="text/javascript" SRC="../js/jquery.nyroModal.pack.js"></script>
+<!-- jQuery form validation -->
+<script type="text/javascript" SRC="../js/jquery.validate_pack.js"></script>
+<script type="text/javascript" src="../jBox/jquery.jBox-2.3.min.js"></script>
+<script type="text/javascript" src="../jBox/i18n/jquery.jBox-zh-CN.js"></script>
+
+<link type="text/css" rel="stylesheet" href="../jBox/Skins/Blue/jbox.css"/>
+
+
+<link href="../uploadify/uploadify.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../uploadify/swfobject.js"></script>
+<script type="text/javascript" src="../uploadify/jquery.uploadify.js"></script>
+<!-- Internet Explorer Fixes --> 
+<!--[if IE]>
+<link rel="stylesheet" type="text/css" media="all" href="../css/ie.css"/>
+<script src="../js/html5.js"></script>
+<![endif]-->
+<!--Upgrade MSIE5.5-7 to be compatible with MSIE8: http://ie7-js.googlecode.com/svn/version/2.1(beta3)/IE8.js -->
+<!--[if lt IE 8]>
+<script src="../js/IE8.js"></script>
+<![endif]-->
+<style type="text/css">
+	body {
+		font: 13px Arial, Helvetica, Sans-serif;
+	}
+	
+	.haha {
+		color: #FFFFFF;
+	}
+	
+	#queue {
+		background-color: #FFF;
+		border-radius: 3px;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+		height: 420px;
+		margin-bottom: 10px;
+		overflow: auto;
+		padding: 5px 10px;
+		width: 500px;
+	}
+</style>
+<script type="text/javascript">
+
+$(document).ready(function(){
+	
+	/* setup navigation, content boxes, etc... */
+	//Administry.setup();
+
+	/* progress bar animations - setting initial values */
+	Administry.progress("#capacity", 72, 100);
+	
+	/* tabs */
+	$("#tabs").tabs();
+	
+});
+</script>
+</head>
+<body>
+	<!-- Header -->
+	<!-- #include /header.html -->
+	<!-- End of Header -->
+	<!-- Page title -->
+	<div id="pagetitle">
+		<div class="wrapper">
+			<h1>相册</h1>
+			<!-- Quick search box -->
+			<form action="" method="get"><input class="" type="text" id="q" name="q" /></form>
+		</div>
+	</div>
+	<!-- End of Page title -->
+	
+	<!-- Page content -->
+	<div id="page">
+		<!-- Wrapper -->
+		<div class="wrapper">
+				<!-- Left column/section -->
+				<section class="column width6 first">					
+
+					<h3>我的相册</h3>
+					
+					<div id="tabs">
+						<!--<ul>
+							<li><a class="corner-tl" href="#tabs-date">List by date</a></li>
+							<li><a class="corner-tr" href="#tabs-abc">List by alphabet</a></li>
+						</ul>
+						-->
+						<div id="tabs-date">
+							<div class="colgroup">
+								<div class="width3 column first">
+									<p>展示 <b>1-10</b> 共计 <b>68</b> 个相册</p>
+								</div>
+								<div class="width3 column">
+									<p class="pagination ta-right">
+										<a href="#">«</a>
+										<a class="pagination-active" href="#">1</a>
+										<a href="#">2</a>
+										<a href="#">3</a>
+										...
+										<a href="#">12</a>
+										<a href="#">13</a>
+										<a href="#">14</a>
+										<a href="#">»</a>
+									</p>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+							<hr />
+							
+							<!--<h5>Friday, 16th of April 2010</h5>
+							
+							-->
+							<!-- #for album : ${albumList } -->
+							
+							<div class="colgroup leading">
+								<div class="width1 column first ta-center">
+									<!-- #if null==${album.frontcover} -->
+									<img SRC="../img/preview-not-available.gif" alt="" />
+									<!-- #else -->
+									<img SRC="${imgPath }/small/${album.frontcover }" width="64" height="64" alt="" />
+									<!-- #end -->
+								</div>
+								<div class="width5 column"> 
+									<form id="${album.id}" method="post" action="albumshow" class="nyroModal">
+									  <input type="hidden" name="albumid" value="${album.id }" />
+									  <a href="javascript:document.getElementById('${album.id}').submit();" title="${album.name }"><b class="big">${album.name }</b></a><br/>
+									</form>
+									
+									<small><b>_张</b> |  创建时间: <b>_</b> </small><br/>
+									<a href="http: //;">删除</a> &middot; <a href="http: //;">查看</a> &middot; <a href="http: //;">编辑</a>
+								</div>
+							</div>
+							<!-- #end -->
+							
+							<div class="clearfix"></div>
+							
+							<hr/>
+							<div class="colgroup leading">
+								<div class="width3 column first">
+									<p>展示 <b>1-10</b> 共计 <b>68</b> 个相册</p>
+								</div>
+								<div class="width3 column">
+									<p class="pagination ta-right">
+										<a href="#">«</a>
+										<a class="pagination-active" href="#">1</a>
+										<a href="#">2</a>
+										<a href="#">3</a>
+										...
+										<a href="#">12</a>
+										<a href="#">13</a>
+										<a href="#">14</a>
+										<a href="#">»</a>
+									</p>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+						
+						</div>
+						</div>
+				</section>
+				<!-- End of Left column/section -->
+				
+				<!-- Right column/section -->
+				<aside class="column width2">
+					<p class="leading">
+					<a href="javascript:$.jBox(html, { width:500, height:400 ,title: '新建相册', submit: submit });" class="btn btn-special">
+					<img SRC="../img/add.png" class="icon" alt=""/>新建相册</a>
+					</p> 
+				
+					<p class="leading">
+					<a href="prealbumup" class="btn btn-special btn-green">
+					<img SRC="../img/add.png" class="icon" alt=""/>上传照片</a>
+					</p> 
+					
+					<div class="content-box">
+						<header>
+							<h3>标签</h3>
+						</header>
+						<section>
+							<!--<div class="tagcloud">
+								<a href="#" class="tag1">lorem</a> <a href="#" class="tag5">ipsum</a> <a href="#" class="tag1">dolor</a> <a href="#" class="tag3">sit</a> <a href="#" class="tag1">amet</a>
+							</div>
+						--></section>
+					</div>
+				</aside>
+				<!-- End of Right column/section -->
+				
+		</div>
+		<!-- End of Wrapper -->
+	</div>
+	<!-- End of Page content -->
+	
+	<!-- Page footer -->
+	<footer id="bottom">
+		<div class="wrapper">
+			<nav>
+				<a href="#">Dashboard</a> &middot;
+				<a href="#">Content</a> &middot;
+				<a href="#">Reports</a> &middot;
+				<a href="#">Users</a> &middot;
+				<a href="#">Media</a> &middot;
+				<a href="#">Events</a> &middot;
+				<a href="#">Newsletter</a> &middot;
+				<a href="#">Settings</a>
+			</nav>
+			<p>Copyright &copy; 2010 <b><a HREF="http://www.865171.cn" title="www.865171.cn">www.865171.cn</a></b> | Icons by <a HREF="http://www.865171.cn">865171.cn</a></p>
+		</div>
+	</footer>
+	<!-- End of Page footer -->
+	
+	<!-- Animated footer -->
+	<footer id="animated">
+		<ul>
+			<li><a href="#">Dashboard</a></li>
+			<li><a href="#">Content</a></li>
+			<li><a href="#">Reports</a></li>
+			<li><a href="#">Users</a></li>
+			<li><a href="#">Media</a></li>
+			<li><a href="#">Events</a></li>
+			<li><a href="#">Newsletter</a></li>
+			<li><a href="#">Settings</a></li>
+		</ul>
+	</footer>
+	<!-- End of Animated footer -->
+	
+	<!-- Scroll to top link -->
+	<a href="#" id="totop">^ scroll to top</a>
+
+<!-- User interface javascript load -->
+<script type="text/javascript" SRC="../js/administry.js"></script>
+    <form id="addalbum" method="post" action="albumqadd">
+		<input type="hidden" id="albumname" name="albumname" value="" />
+		<input type="hidden" id="repath" name="repath" value="album" />
+	</form>
+	<script type="text/javascript">
+				var html = "<div style='padding:10px;'>相册名称：<input type='text' id='yourname' name='yourname' /></div>";
+				var submit = function (v, h, f) {
+					if (f.yourname == '') {
+						//$.jBox.tip("请输入相册", 'error', { focusId: "yourname" }); // 关闭设置 yourname 为焦点
+						
+						return false;
+					}
+					parent.toadd(f.yourname);						
+					//$.jBox.tip("你叫：" + f.yourname);
+					//$.jBox.tip("你叫：" + h.find("#yourname").val());
+					//$.jBox.tip("你叫：" + h.find(":input[name='yourname']").val());
+					
+					return true;
+				};
+										
+		</script>
+	<script type="text/javascript">
+		function toadd(v){
+			document.getElementById("albumname").value=v;
+			document.getElementById("addalbum").submit();
+		}
+		Administry.setup();
+	</script>
+</body>
+</html>

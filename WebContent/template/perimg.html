@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Admin Template by www.865171.cn</title>
+<meta name="description" content="Administry - Admin Template by www.865171.cn" />
+<meta name="keywords" content="Admin,Template" />
+<!-- Favicons --> 
+<link rel="shortcut icon" type="image/png" HREF="../img/favicons/favicon.png"/>
+<link rel="icon" type="image/png" HREF="../img/favicons/favicon.png"/>
+<link rel="apple-touch-icon" HREF="../img/favicons/apple.png" />
+<!-- Main Stylesheet --> 
+<link rel="stylesheet" href="../css/style.css" type="text/css" />
+<!-- Colour Schemes
+Default colour scheme is blue. Uncomment prefered stylesheet to use it.
+<link rel="stylesheet" href="../css/brown.css" type="text/css" media="screen" />  
+<link rel="stylesheet" href="../css/gray.css" type="text/css" media="screen" />  
+<link rel="stylesheet" href="../css/green.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/pink.css" type="text/css" media="screen" />  
+<link rel="stylesheet" href="../css/red.css" type="text/css" media="screen" />
+-->
+<!-- Your Custom Stylesheet --> 
+<link rel="stylesheet" href="../css/custom.css" type="text/css" />
+<link rel="stylesheet" href="../css/jquery.Jcrop.css" type="text/css" />
+<!--swfobject - needed only if you require <video> tag support for older browsers -->
+<script type="text/javascript" SRC="../js/swfobject.js"></script>
+<!-- jQuery with plugins -->
+<script type="text/javascript" SRC="../js/jquery-1.4.2.min.js"></script>
+<!-- Could be loaded remotely from Google CDN : <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> -->
+<script type="text/javascript" SRC="../js/jquery.ui.core.min.js"></script>
+<script type="text/javascript" SRC="../js/jquery.ui.widget.min.js"></script>
+<script type="text/javascript" SRC="../js/jquery.ui.tabs.min.js"></script>
+<!-- jQuery tooltips -->
+<script type="text/javascript" SRC="../js/jquery.tipTip.min.js"></script>
+<!-- Superfish navigation -->
+<script type="text/javascript" SRC="../js/jquery.superfish.min.js"></script>
+<script type="text/javascript" SRC="../js/jquery.supersubs.min.js"></script>
+<!-- jQuery popup box -->
+<script type="text/javascript" SRC="../js/jquery.nyroModal.pack.js"></script>
+<!-- jQuery form validation -->
+<script type="text/javascript" SRC="../js/jquery.validate_pack.js"></script>
+<script type="text/javascript" SRC="../js/jquery.Jcrop.js"></script>
+<!-- Internet Explorer Fixes --> 
+<!--[if IE]>
+<link rel="stylesheet" type="text/css" media="all" href="../css/ie.css"/>
+<script src="../js/html5.js"></script>
+<![endif]-->
+<!--Upgrade MSIE5.5-7 to be compatible with MSIE8: http://ie7-js.googlecode.com/svn/version/2.1(beta3)/IE8.js -->
+<!--[if lt IE 8]>
+<script src="../js/IE8.js"></script>
+<![endif]-->
+
+<style type="text/css">
+
+/* Apply these styles only when #preview-pane has
+   been placed within the Jcrop widget */
+.jcrop-holder #preview-pane {
+  display: block;
+  position: absolute;
+  z-index: 2000;
+  top: 10px;
+  right: -190px;
+  padding: 6px;
+  border: 1px rgba(0,0,0,.4) solid;
+  background-color: white;
+
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+
+  -webkit-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* The Javascript code will set the aspect ratio of the crop
+   area based on the size of the thumbnail preview,
+   specified here */
+#preview-pane .preview-container {
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+}
+
+</style>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	/* setup navigation, content boxes, etc... */
+	Administry.setup();
+	
+	/* progress bar animations - setting initial values */
+	Administry.progress("#progress1", 1, 6);
+	
+	// validate form on keyup and submit
+	var validator = $("#photoform").validate({
+		rules: {
+			//firstname: "required",
+			//lastname: "required",
+			//username: {
+			//	required: true,
+			//	minlength: 2
+			//},
+			//password: {
+			//	required: true,
+			//	minlength: 5
+			//},
+			//password_confirm: {
+			//	required: true,
+			//	minlength: 5,
+			//	equalTo: "#password"
+			//},
+			//email: {
+			//	required: true,
+			//	email: true
+			//},
+			//dateformat: "required",
+			//terms: "required"
+		},
+		messages: {
+			firstname: "Enter your firstname",
+			lastname: "Enter your lastname",
+			username: {
+				required: "Enter a username",
+				minlength: jQuery.format("Enter at least {0} characters")
+			},
+			password: {
+				required: "Provide a password",
+				rangelength: jQuery.format("Enter at least {0} characters")
+			},
+			password_confirm: {
+				required: "Repeat your password",
+				minlength: jQuery.format("Enter at least {0} characters"),
+				equalTo: "Enter the same password as above"
+			},
+			email: {
+				required: "Please enter a valid email address",
+				minlength: "Please enter a valid email address"
+			},
+			dateformat: "Choose your preferred dateformat",
+			terms: " "
+		},
+		// the errorPlacement has to take the layout into account
+		errorPlacement: function(error, element) {
+			error.insertAfter(element.parent().find('label:first'));
+		},
+		// set new class to error-labels to indicate valid fields
+		success: function(label) {
+			// set &nbsp; as text for IE
+			label.html("&nbsp;").addClass("ok");
+			$("#photoform").submit();
+		}
+	});
+	
+	// propose username by combining first- and lastname
+	$("#username").focus(function() {
+		var firstname = $("#firstname").val();
+		var lastname = $("#lastname").val();
+		if(firstname && lastname && !this.value) {
+			this.value = firstname + "." + lastname;
+		}
+	});
+
+});
+</script>
+<script type="text/javascript">
+  jQuery(function($){
+
+    // Create variables (in this scope) to hold the API and image size
+    var jcrop_api,
+        boundx,
+        boundy,
+
+        // Grab some information about the preview pane
+        $preview = $('#preview-pane'),
+        $pcnt = $('#preview-pane .preview-container'),
+        $pimg = $('#preview-pane .preview-container img'),
+
+        xsize = $pcnt.width(),
+        ysize = $pcnt.height();
+    
+    console.log('init',[xsize,ysize]);
+    $('#target').Jcrop({
+      onChange: updatePreview,
+      onSelect: updateCoords,
+      allowResize:true,
+      boxWidth:500,
+      minSize: [0,0],
+      maxSize:[0,0],
+      aspectRatio: xsize / ysize
+    },function(){
+      // Use the API to get the real image size
+      var bounds = this.getBounds();
+      boundx = bounds[0];
+      boundy = bounds[1];
+      // Store the API in the jcrop_api variable
+      jcrop_api = this;
+
+      // Move the preview into the jcrop container for css positioning
+      $preview.appendTo(jcrop_api.ui.holder);
+    });
+
+    function updatePreview(c)
+    {
+      if (parseInt(c.w) > 0)
+      {
+        var rx = xsize / c.w;
+        var ry = ysize / c.h;
+
+        $pimg.css({
+          width: Math.round(rx * boundx) + 'px',
+          height: Math.round(ry * boundy) + 'px',
+          marginLeft: '-' + Math.round(rx * c.x) + 'px',
+          marginTop: '-' + Math.round(ry * c.y) + 'px'
+        });
+      }
+    };
+    function updateCoords(c)
+    {
+      $('#x').val(c.x);
+      $('#y').val(c.y);
+      $('#w').val(c.w);
+      $('#h').val(c.h);
+    };
+    
+	function checkCoords(){
+      if (parseInt($('#w').val())) return true;
+      	alert('请选择裁剪区域');
+      	return false;
+    };
+  });
+
+	
+</script>
+
+</head>
+<body>
+	<!-- Header -->
+	<!-- #include /header.html -->
+	<!-- End of Header -->
+	<!-- Page title -->
+	<div id="pagetitle">
+		<div class="wrapper">
+			<h1>Form examples</h1>
+			<!-- Quick search box -->
+			<form action="" method="get"><input class="" type="text" id="q" name="q" /></form>
+		</div>
+	</div>
+	<!-- End of Page title -->
+	
+	<!-- Page content -->
+	<div id="page">
+		<!-- Wrapper -->
+		<div class="wrapper">
+				<!-- Left column/section -->
+				<section class="column width6 first">					
+
+					<h3>Form validation example</h3>
+					<form id="photoform" method="post" action="ppups" enctype="multipart/form-data">
+
+						<fieldset>
+							<p>
+								<label class="required" for="photo">选择一张照片:</label><br/>
+								<input type="file" id="photo" class="half" value="" name="photo"/>
+								<input type="submit" class="btn btn-green big" value="上传"/>
+							</p>
+						</fieldset>
+
+					</form>
+					<form id="photookform" method="post" action="pped" onsubmit="return checkCoords();">
+
+						<fieldset>
+							<p>
+								<!-- #if null==${user.photo} -->
+								<img src="../upload/usr/sago.jpg" id="target" alt="修改我的头像" />
+								<input type="hidden" id="imgname" name="imgname" value="${user.photo }"/>
+								<div id="preview-pane">
+								   <div class="preview-container">
+								     <img src="../upload/usr/sago.jpg" class="jcrop-preview" alt="头像预览" />
+								   </div>
+								</div>
+								<!-- #else -->
+								<img src="../upload/usr/photo/${user.photo }" id="target" alt="修改我的头像" />
+								<input type="hidden" id="imgname" name="imgname" value="${user.photo }"/>
+								<div id="preview-pane">
+								   <div class="preview-container">
+								     <img src="../upload/usr/photo/${user.photo }" class="jcrop-preview" alt="头像预览" />
+								   </div>
+								</div>
+								<!-- #end -->
+								
+								<input type="hidden" id="x" name="x" />
+								<input type="hidden" id="y" name="y" />
+								<input type="hidden" id="w" name="w" />
+								<input type="hidden" id="h" name="h" />
+							</p>
+							
+							<p class="box"><input type="submit" class="btn btn-green big" value="确认"/> or <input type="reset" class="btn" value="重新选择"/></p>
+
+						</fieldset>
+
+					</form>
+					
+				
+				</section>
+				<!-- End of Left column/section -->
+				
+				<!-- Right column/section -->
+				<aside class="column width2">
+					<div id="rightmenu">
+						<header>
+							<h3>你还可以做如下操作</h3>
+						</header>
+						<dl class="first">
+							<dt><img width="16" height="16" alt="Basic styles" SRC="../img/style.png"></dt>
+							<dd><a HREF="p">修改个人资料</a></dd>
+							<dd class="last">修改或完善您的个人信息</dd>							
+							
+							<dt><img width="16" height="16" alt="Form validation" SRC="../img/book.png"></dt>
+							<dd><a HREF="pp">修改头像</a></dd>
+							<dd class="last">选取一张照片作为头像，便于其他人看到您</dd>	
+							
+							<dt><img width="16" height="16" alt="Form validation" SRC="../img/book.png"></dt>
+							<dd><a HREF="gp">修改导游信息</a></dd>
+							<dd class="last">修改更正证件的照片进行认证</dd>
+							
+							<dt><img width="16" height="16" alt="Form validation" SRC="../img/book.png"></dt>
+							<dd><a HREF="gpp">修改证件图片</a></dd>
+							<dd class="last">修改更正证件的照片进行认证</dd>							
+						</dl>
+					</div>
+					<div class="content-box">
+						<header>
+							<h3>个性签名</h3>
+						</header>
+						<section>
+							<q></q>							
+						</section>
+					</div>
+				</aside>
+				<!-- End of Right column/section -->
+				
+		</div>
+		<!-- End of Wrapper -->
+	</div>
+	<!-- End of Page content -->
+	
+	<!-- Page footer -->
+	<footer id="bottom">
+		<div class="wrapper">
+			<nav>
+				<a href="#">Dashboard</a> &middot;
+				<a href="#">Content</a> &middot;
+				<a href="#">Reports</a> &middot;
+				<a href="#">Users</a> &middot;
+				<a href="#">Media</a> &middot;
+				<a href="#">Events</a> &middot;
+				<a href="#">Newsletter</a> &middot;
+				<a href="#">Settings</a>
+			</nav>
+			<p>Copyright &copy; 2010 <b><a HREF="http://www.865171.cn" title="www.865171.cn">www.865171.cn</a></b> | Icons by <a HREF="http://www.865171.cn">865171.cn</a></p>
+		</div>
+	</footer>
+	<!-- End of Page footer -->
+	
+	<!-- Animated footer -->
+	<footer id="animated">
+		<ul>
+			<li><a href="#">Dashboard</a></li>
+			<li><a href="#">Content</a></li>
+			<li><a href="#">Reports</a></li>
+			<li><a href="#">Users</a></li>
+			<li><a href="#">Media</a></li>
+			<li><a href="#">Events</a></li>
+			<li><a href="#">Newsletter</a></li>
+			<li><a href="#">Settings</a></li>
+		</ul>
+	</footer>
+	<!-- End of Animated footer -->
+	
+	<!-- Scroll to top link -->
+	<a href="#" id="totop">^ scroll to top</a>
+
+<!-- User interface javascript load -->
+<script type="text/javascript" SRC="../js/administry.js"></script>
+</body>
+</html>

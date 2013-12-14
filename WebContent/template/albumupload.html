@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Admin Template by www.865171.cn</title>
+<meta name="description" content="Administry - Admin Template by www.865171.cn" />
+<meta name="keywords" content="Admin,Template" />
+<!-- Favicons --> 
+<link rel="shortcut icon" type="image/png" HREF="../img/favicons/favicon.png"/>
+<link rel="icon" type="image/png" HREF="../img/favicons/favicon.png"/>
+<link rel="apple-touch-icon" HREF="../img/favicons/apple.png" />
+<!-- Main Stylesheet --> 
+<link rel="stylesheet" href="../css/style.css" type="text/css" />
+<!-- Colour Schemes
+Default colour scheme is blue. Uncomment prefered stylesheet to use it.
+<link rel="stylesheet" href="../css/brown.css" type="text/css" media="screen" />  
+<link rel="stylesheet" href="../css/gray.css" type="text/css" media="screen" />  
+<link rel="stylesheet" href="../css/green.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/pink.css" type="text/css" media="screen" />  
+<link rel="stylesheet" href="../css/red.css" type="text/css" media="screen" />
+-->
+<!-- Your Custom Stylesheet --> 
+<link rel="stylesheet" href="../css/custom.css" type="text/css" />
+<!--swfobject - needed only if you require <video> tag support for older browsers -->
+<script type="text/javascript" SRC="../js/swfobject.js"></script>
+<!-- jQuery with plugins -->
+<script type="text/javascript" SRC="../js/jquery-1.4.2.min.js"></script>
+<!-- Could be loaded remotely from Google CDN : <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> -->
+<script type="text/javascript" SRC="../js/jquery.ui.core.min.js"></script>
+<script type="text/javascript" SRC="../js/jquery.ui.widget.min.js"></script>
+<script type="text/javascript" SRC="../js/jquery.ui.tabs.min.js"></script>
+<!-- jQuery tooltips -->
+<script type="text/javascript" SRC="../js/jquery.tipTip.min.js"></script>
+<!-- Superfish navigation -->
+<script type="text/javascript" SRC="../js/jquery.superfish.min.js"></script>
+<script type="text/javascript" SRC="../js/jquery.supersubs.min.js"></script>
+<!-- jQuery popup box -->
+<script type="text/javascript" SRC="../js/jquery.nyroModal.pack.js"></script>
+<!-- jQuery form validation -->
+<script type="text/javascript" SRC="../js/jquery.validate_pack.js"></script>
+<script type="text/javascript" src="../jBox/jquery.jBox-2.3.min.js"></script>
+<script type="text/javascript" src="../jBox/i18n/jquery.jBox-zh-CN.js"></script>
+
+<link type="text/css" rel="stylesheet" href="../jBox/Skins/Blue/jbox.css"/>
+
+
+<link href="../uploadify/uploadify.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../uploadify/swfobject.js"></script>
+<script type="text/javascript" src="../uploadify/jquery.uploadify.js"></script>
+<!-- Internet Explorer Fixes --> 
+<!--[if IE]>
+<link rel="stylesheet" type="text/css" media="all" href="../css/ie.css"/>
+<script src="../js/html5.js"></script>
+<![endif]-->
+<!--Upgrade MSIE5.5-7 to be compatible with MSIE8: http://ie7-js.googlecode.com/svn/version/2.1(beta3)/IE8.js -->
+<!--[if lt IE 8]>
+<script src="../js/IE8.js"></script>
+<![endif]-->
+<style type="text/css">
+	body {
+		font: 13px Arial, Helvetica, Sans-serif;
+	}
+	
+	.haha {
+		color: #FFFFFF;
+	}
+	
+	#queue {
+		background-color: #FFF;
+		border-radius: 3px;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+		height: 350px;
+		margin-bottom: 10px;
+		overflow: auto;
+		padding: 5px 10px;
+		width: 715px;
+	}
+</style>
+<script type="text/javascript">
+
+$(document).ready(function(){
+	
+	/* setup navigation, content boxes, etc... */
+	//Administry.setup();
+
+	/* progress bar animations - setting initial values */
+	//Administry.progress("#capacity", 72, 100);
+	
+	/* tabs */
+	//$("#tabs").tabs();
+	
+});
+</script>
+</head>
+<body>
+	<!-- Header -->
+	<!-- #include /header.html -->
+	<!-- End of Header -->
+	<!-- Page title -->
+	<div id="pagetitle">
+		<div class="wrapper">
+			<h1>相册</h1>
+			<!-- Quick search box -->
+			<form action="" method="get"><input class="" type="text" id="q" name="q" /></form>
+		</div>
+	</div>
+	<!-- End of Page title -->
+	
+	<!-- Page content -->
+	<div id="page">
+		<!-- Wrapper -->
+		<div class="wrapper">
+				<!-- Left column/section -->
+				<section class="column width6 first">					
+					<div id="tabs">
+						<!--<ul>
+							<li><a class="corner-tl" href="#tabs-date">List by date</a></li>
+							<li><a class="corner-tr" href="#tabs-abc">List by alphabet</a></li>
+						</ul>
+						-->
+						<div id="tabs-date">
+							<div class="colgroup">
+								<div class="width3 column first">
+									<p>请选择相册：
+										<select id="albumid">
+										<!-- #for album1 : ${albumlist } -->
+											<option value="${album1.id }">${album1.name }</option>
+										<!-- #end -->
+										</select>
+									</p>
+								</div>
+								<div class="width3 column">
+									<p class="ta-right">
+										<a href="javascript:$.jBox(html, { width:500, height:400 ,title: '新建相册', submit: submit });" class="btn"><span class="icon icon-add">&nbsp;</span>新建相册</a>
+										
+									</p>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+							<hr />
+							
+							
+							<div class="colgroup leading">
+								<input id="file_upload" name="file_upload" type="file">
+								<div id="queue"></div>
+							</div>
+							
+							<div class="colgroup leading">
+								<div class="width3 column first">
+									<a href="javascript:$('#file_upload').uploadify('upload');" class="btn"><span class="icon icon-add">&nbsp;</span>开始上传</a>
+									<a href="javascript:$('#file_upload').uploadify('cancel', '*');" class="btn"><span class="icon icon-add">&nbsp;</span>清除队列</a>
+									
+								</div>
+								<div class="width3 column">
+									<p class="pagination ta-right">
+										
+									</p>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+						
+						</div>
+						</div>
+						
+				</section>
+				<!-- End of Left column/section -->
+				
+				<!-- Right column/section -->
+				<aside class="column width2">
+					<p class="leading">
+					<a href="album" class="btn btn-special btn-green">
+					<img SRC="../img/add.png" class="icon" alt=""/>返回相册</a>
+					</p> 
+					<div class="content-box">
+						<header>
+							<h3>标签</h3>
+						</header>
+						<section>
+							<!--<div class="tagcloud">
+								<a href="#" class="tag1">lorem</a> <a href="#" class="tag5">ipsum</a> <a href="#" class="tag1">dolor</a> <a href="#" class="tag3">sit</a> <a href="#" class="tag1">amet</a>
+							</div>
+						--></section>
+					</div>
+				</aside>
+				<!-- End of Right column/section -->
+				
+		</div>
+		<!-- End of Wrapper -->
+	</div>
+	<!-- End of Page content -->
+	
+	<!-- Page footer -->
+	<footer id="bottom">
+		<div class="wrapper">
+			<nav>
+				<a href="#">Dashboard</a> &middot;
+				<a href="#">Content</a> &middot;
+				<a href="#">Reports</a> &middot;
+				<a href="#">Users</a> &middot;
+				<a href="#">Media</a> &middot;
+				<a href="#">Events</a> &middot;
+				<a href="#">Newsletter</a> &middot;
+				<a href="#">Settings</a>
+			</nav>
+			<p>Copyright &copy; 2010 <b><a HREF="http://www.865171.cn" title="www.865171.cn">www.865171.cn</a></b> | Icons by <a HREF="http://www.865171.cn">865171.cn</a></p>
+		</div>
+	</footer>
+	<!-- End of Page footer -->
+	
+	<!-- Animated footer -->
+	<footer id="animated">
+		<ul>
+			<li><a href="#">Dashboard</a></li>
+			<li><a href="#">Content</a></li>
+			<li><a href="#">Reports</a></li>
+			<li><a href="#">Users</a></li>
+			<li><a href="#">Media</a></li>
+			<li><a href="#">Events</a></li>
+			<li><a href="#">Newsletter</a></li>
+			<li><a href="#">Settings</a></li>
+		</ul>
+	</footer>
+	<!-- End of Animated footer -->
+	
+	<!-- Scroll to top link -->
+	<a href="#" id="totop">^ scroll to top</a>
+
+<!-- User interface javascript load -->
+<script type="text/javascript" SRC="../js/administry.js"></script>
+
+<script type="text/javascript">
+
+		$(function() {
+			$('#file_upload')
+					.uploadify(
+							{	
+								'debug' 			: false,
+								'auto' 				: false, //是否自动上传,   
+								'buttonClass' 		: 'haha', //按钮辅助class   
+								'buttonText' 		: '选择要上传的图片', //按钮文字   
+								'height' 			: 20, //按钮高度   
+								'width' 			: 120, //按钮宽度   
+								//'checkExisting' 	: 'check-exists.php',//是否检测图片存在,不检测:false   
+								'fileObjName'		: 'files', //默认 Filedata, $_FILES控件名称   
+								'fileSizeLimit'		: '0', //文件大小限制 0为无限制 默认KB   
+								'fileTypeDesc'		: '请选择图片文件', //图片选择描述   
+								'fileTypeExts' 		: '*.gif; *.jpg; *.png',//文件后缀限制 默认：'*.*'   
+								//'formData' 			: {
+								//	'someKey' : 'someValue',
+								//	'someOtherKey' : 1
+								//},//传输数据JSON格式   
+								//'formData'		    :{'albumid':'${albumid }' },                
+								//'overrideEvents'	: ['onUploadProgress'],  // The progress will not be updated   
+								//'progressData'	: 'speed',             //默认percentage 进度显示方式   
+								'method'            : 'get',
+								'queueID' 			: 'queue', //默认队列ID   
+								'queueSizeLimit' 	: 50, //一个队列上传文件数限制   
+								'removeCompleted'	: true, //完成时是否清除队列 默认true   
+								'removeTimeout'		: 3, //完成时清除队列显示秒数,默认3秒   
+								'requeueErrors'		: false, //队列上传出错，是否继续回滚队列   
+								'successTimeout'	: 3, //上传超时   
+								'uploadLimit' 		: 99, //允许上传的最多张数   
+								'swf' 				: '../uploadify.swf', //swfUpload   
+								'uploader' 			: 'albumup', //服务器端脚本   
+								
+								'multi'             : true,
+								//修改formData数据   
+								'onUploadStart' : function(file) {
+									//$("#file_upload").uploadify("settings", "someOtherKey", 2);   
+								},
+								'onUploadStart' : function(file) {
+									//alert("a:"+document.getElementById("albumid").value);
+									$('#file_upload').uploadify("settings","formData",{"albumid":$("#albumid").val()});    
+								},
+								//删除时触发   
+								'onCancel' : function(file) {
+									//alert('The file ' + file.name + '--' + file.size + ' was cancelled.');   
+								},
+								//清除队列   
+								'onClearQueue' : function(queueItemCount) {
+									//alert(queueItemCount + ' file(s) were removed from the queue');   
+								},
+								//调用destroy是触发   
+								'onDestroy' : function() {
+									alert('我被销毁了');
+								},
+								//每次初始化一个队列是触发   
+								'onInit' : function(instance) {
+									//alert('The queue ID is ' + instance.settings.queueID);   
+								},
+								//上传成功   
+								'onUploadSuccess' : function(file, data,
+										response) {
+									//alert(file.name + ' | ' + response + ':' + data);   
+									if(""!=$('#queue').innerHTML){
+										$('#file_upload').uploadify('upload');
+									}
+									
+								},
+								//上传错误   
+								'onUploadError' : function(file, errorCode,
+										errorMsg, errorString) {
+									//alert('The file ' + file.name + ' could not be uploaded: ' + errorString);   
+								},
+								//上传汇总   
+								'onUploadProgress' : function(file,
+										bytesUploaded, bytesTotal,
+										totalBytesUploaded, totalBytesTotal) {
+									//$('#progress').html(
+									//		totalBytesUploaded
+									//				+ ' bytes uploaded of '
+									//				+ totalBytesTotal
+									//				+ ' bytes.');
+								},
+								//上传完成   
+								'onUploadComplete' : function(file) {
+									//alert('上传完成');   
+								},
+
+							});
+		});
+
+		//变换按钮   
+		function changeBtnText() {
+			$('#file_upload').uploadify('settings', 'buttonText', '继续上传');
+		}
+
+		//返回按钮   
+		function returnBtnText() {
+			alert('The button says '
+					+ $('#file_upload').uploadify('settings', 'buttonText'));
+		}
+        </script>
+        <script type="text/javascript">
+				var html = "<div style='padding:10px;'>相册名称：<input type='text' id='yourname' name='yourname' /></div>";
+				var submit = function (v, h, f) {
+					if (f.yourname == '') {
+						//$.jBox.tip("请输入相册", 'error', { focusId: "yourname" }); // 关闭设置 yourname 为焦点
+						return false;
+					}
+					parent.toadd(f.yourname);							
+					//$.jBox.tip("你叫：" + f.yourname);
+					//$.jBox.tip("你叫：" + h.find("#yourname").val());
+					//$.jBox.tip("你叫：" + h.find(":input[name='yourname']").val());
+					
+					return true;
+				};
+										
+		</script>
+		 <form id="addalbum" method="post" action="albumqadd">
+			<input type="hidden" id="albumname" name="albumname" value="" />
+			<input type="hidden" id="repath" name="repath" value="prealbumup" />
+		</form>
+		<script type="text/javascript">
+			function toadd(v){
+				document.getElementById("albumname").value=v;
+				document.getElementById("addalbum").submit();
+			}
+			
+			Administry.setup();
+		</script>
+</body>
+</html>
