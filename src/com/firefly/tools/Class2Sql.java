@@ -497,11 +497,11 @@ public class Class2Sql {
 		
 		Map<String, String> map=new HashMap<String, String>();
 		//map.put("account", "like");
-		//map.put("birthday", ">=");
+		map.put("gender", ">=");
 		
 		String wheresql=null;//" and birthday <= /? and password like '%/?%'";
 		
-		Object[] objs=null;//new Object[]{(new Date()).getTime(),"abc"};
+		Object[] objs=new Object[]{"dfdfd"};//new Object[]{(new Date()).getTime(),"abc"};
 		
 		System.out.println(createInsertSql("user",um));
 		System.out.println(createUpdateSql("user", um, queryum));
@@ -511,6 +511,6 @@ public class Class2Sql {
 		orders.put("account", "desc");
 		//map.put("birthday", ">=");
 		
-		System.out.println(createSelectSql("user", "*", queryum,map,wheresql,objs,orders,2,10));
+		System.out.println(createSelectSql("user", "id,name", queryum,map," and name='/?'",objs,orders,2,10));
 	}
 }
