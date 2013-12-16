@@ -25,38 +25,63 @@ public class AreaServlet extends HttpServlet{
 	        
 	        String pString=request.getParameter("input");
 	        pString=new String(pString.getBytes("iso-8859-1"),"UTF-8");
+	        pString=pString.toLowerCase();
+	        
+	        String stype=request.getParameter("stype");
+	        
+	        String sql="";
+	        if(stype!=null&&"country".equals(stype)){
+				sql="select a.id as id,a.name as name,a.fullname as fullname,a.ename as ename,a.pyname as pyname,a.shortname as shortname,p.name as pnameStr,p.ename as penameStr,e.name as stypeStr,e.ename as stypeeStr "
+						+"from area a "
+						+"left join enums p on  a.pid = p.id "
+						+"left join enums e on a.stype = e.id "
+						+"where "
+						+"1=1 and a.stype = 'country' "
+						+"and (a.name like '"+pString+"%' or a.fullname like '"+pString+"%' or a.ename like '"+pString+"%' or a.pyname like '"+pString+"%' or a.shortname like '"+pString+"%')";
+			}
+	        if(stype!=null&&"city".equals(stype)){
+				sql="select a.id as id,a.name as name,a.fullname as fullname,a.ename as ename,a.pyname as pyname,a.shortname as shortname,p.name as pnameStr,p.ename as penameStr,e.name as stypeStr,e.ename as stypeeStr "
+						+"from area a "
+						+"left join area p on  a.pid = p.id "
+						+"left join enums e on a.stype = e.id "
+						+"where "
+						+"1=1 and a.stype = 'city' "
+						+"and (a.name like '"+pString+"%' or a.fullname like '"+pString+"%' or a.ename like '"+pString+"%' or a.pyname like '"+pString+"%' or a.shortname like '"+pString+"%')";
+			}
+	        if(stype!=null&&"all".equals(stype)){
+				sql="select a.id as id,a.name as name,a.fullname as fullname,a.ename as ename,a.pyname as pyname,a.shortname as shortname,p.name as pnameStr,p.ename as penameStr,e.name as stypeStr,e.ename as stypeeStr "
+						+"from area a "
+						+"left join area p on  a.pid = p.id "
+						+"left join enums e on a.stype = e.id "
+						+"where "
+						+"1=1 "
+						+"and (a.name like '"+pString+"%' or a.fullname like '"+pString+"%' or a.ename like '"+pString+"%' or a.pyname like '"+pString+"%' or a.shortname like '"+pString+"%')";
+			}
 			
-			String sqlString="select a.id as id ,a.name as name,a.ename as ename,b.name as pnameStr "
-					+"from area a "
-					+"left join area b "
-					+"on a.pid = b.id "
-					+"where a.pid <> '-1'"
-					+" and (lower(a.name) like '"+pString.toLowerCase()+"%' or lower(a.ename) like '"+pString.toLowerCase()+"%') ";
 			
-			
-				List<AreaModel> list=new ArrayList<AreaModel>();
-				try {
-					list = bo.customListModel(sqlString);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (InstantiationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				List<AreaJsonModel> jslist=new ArrayList<AreaJsonModel>();
-				String xml="<?xml version=\"1.0\" encoding=\"utf-8\" ?><results>";
-				for(AreaModel area:list){
-					xml+="<rs id=\""+area.getId()+"\" info=\"\">"+(area.getName()+","+area.getPnameStr())+"</rs>";
-				}
-				xml+="</results>";
+			List<AreaModel> list=new ArrayList<AreaModel>();
+			try {
+				list = bo.customListModel(new String[]{sql});
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InstantiationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			List<AreaJsonModel> jslist=new ArrayList<AreaJsonModel>();
+			String xml="<?xml version=\"1.0\" encoding=\"utf-8\" ?><results>";
+			for(AreaModel area:list){
+				xml+="<rs id=\""+area.getId()+"\" latlng=\""+(area.getLat()+","+area.getLng())+"\" info=\"\">"+(area.getName()+","+area.getPnameStr())+"</rs>";
+			}
+			xml+="</results>";
 				
-				PrintWriter pw = response.getWriter();  
-				pw.print(xml);
-				pw.close();
+			PrintWriter pw = response.getWriter();  
+			pw.print(xml);
+			pw.close();
 			
 	}
 

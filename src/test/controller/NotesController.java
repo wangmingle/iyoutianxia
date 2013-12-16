@@ -1,7 +1,5 @@
 package test.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Date;
 
@@ -15,13 +13,12 @@ import test.usr.UserModel;
 
 import com.firefly.annotation.Controller;
 import com.firefly.annotation.HttpParam;
+import com.firefly.annotation.PathVariable;
 import com.firefly.annotation.RequestMapping;
 import com.firefly.mvc.web.HttpMethod;
 import com.firefly.mvc.web.View;
-import com.firefly.mvc.web.view.JsonView;
 import com.firefly.mvc.web.view.RedirectView;
 import com.firefly.mvc.web.view.TemplateView;
-import com.firefly.utils.json.Json;
 
 @Controller
 public class NotesController {
@@ -136,5 +133,42 @@ public class NotesController {
 			e.printStackTrace();
 		}*/
 		return new TemplateView("/notes/read.html");
+	}
+	
+	@RequestMapping(value = "/read/?",method = {HttpMethod.GET, HttpMethod.POST})
+	public View readnote(HttpServletRequest request, HttpServletResponse response,@PathVariable String[] args) {
+		HttpSession session = request.getSession();
+		session.getAttribute("user");
+		UserModel user=(UserModel) session.getAttribute("user");
+		request.setAttribute("user", user);
+		String id=null;
+		if(args!=null&&args.length>0){
+			if(args[0]!=null&&!"".equals(args[0].trim())){
+				if(args[0].toLowerCase().lastIndexOf(".html")!=-1){
+					id=args[0].substring(0,args[0].lastIndexOf(".html"));
+				}else{
+					id=args[0];
+				}
+			}
+		}
+		System.out.println(id);
+		if(id!=null){
+			NotesModel notes=new NotesModel();
+			notes.setId(id);
+			
+			try {
+				NotesModel note=NotesBo.singleModel(notes);
+				String context=note.getContext();
+				context=context.replace( "&quot;","\"").replace("&#039;","'");
+				note.setContext(context);
+				request.setAttribute("note", note);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+		return new TemplateView("/notes/readnote.html");
 	}
 }

@@ -20,4 +20,7 @@ public class Common {
 	public static Integer showNums = 10;
 	
 	public static String imgServerPath="http://localhost:8090/uploadify/uploads/";
+	
+	
+	
 }

@@ -64,6 +64,31 @@ public abstract class Bo<M extends Model> implements Bi<M> {
 		
 		return id;
 	}
+	
+	@Override
+	public int addModel(List<M> list) {
+		int res=-1;
+		if(list!=null&&list.size()>0){
+			for(M m:list){
+				String id=Oid.getOid();
+				m.setId(id);
+				
+				String sql=Class2Sql.createInsertSql(tablename, m);
+				log.info(sql);
+				
+				
+				try {
+					res=QueryHelper.update(sql);
+				} catch (SQLException e) {
+					log.info(e.getMessage());
+				} finally{
+					QueryHelper.commit();
+				}
+			}
+		}
+		
+		return res;
+	}
 
 	@Override
 	public int updateModel(M m, M qm) {
@@ -116,13 +141,18 @@ public abstract class Bo<M extends Model> implements Bi<M> {
 	}
 	
 	@Override
-	public List<M> customListModel(String sql) throws SQLException, InstantiationException, IllegalAccessException {
+	public List<M> customListModel(String[] sqls) throws SQLException, InstantiationException, IllegalAccessException {
 		List<M> ulist=new ArrayList<M>();
 		
-		//String sql=Class2Sql.createSelectSql(tablename, "*", m, null, null, null,null,null,null);
-		log.info(sql);
+		if(sqls!=null&&sqls.length>0){
+			for(String sql:sqls){
+				log.info(sql);
+				
+				List<M> l=(List<M>) QueryHelper.query(mClass.newInstance().getClass(), sql);
+				ulist.addAll(l);
+			}
+		}
 		
-		ulist=(List<M>) QueryHelper.query(mClass.newInstance().getClass(), sql);
 		
 		return ulist;
 	}

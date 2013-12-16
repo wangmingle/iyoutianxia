@@ -79,12 +79,14 @@ $(document).ready(function(){
 				<!-- Left column/section -->
 				<section class="column width6 first">					
 
-					<h3>所有游记</h3>
+					<!-- <h3>所有游记</h3> -->
 					
 					<div id="tabs">
 						<ul>
-							<li><a class="corner-tl" href="#tabs-date">按日期</a></li>
-							<li><a class="corner-tr" href="#tabs-abc">按标题</a></li>
+							<li><a class="corner-tl" href="#tabs-date">热门游记</a></li>
+							<li><a class="corner-tr" href="#tabs-abc">最新发表</a></li>
+							<li><a class="corner-tr" href="#tabs-abc">精品游记</a></li>
+							<li><a class="corner-tr" href="#tabs-abc">一周热榜</a></li>
 						</ul>
 						<div id="tabs-date">
 							<div class="colgroup">
@@ -105,34 +107,30 @@ $(document).ready(function(){
 									</p>
 								</div>
 							</div>
-							<div class="clearfix"></div>
+							<!-- <div class="clearfix"></div> -->
 							<hr />
 							
-							<h5>2013年11月20日, 星期三</h5>
+							<!-- <h5>2013年11月20日, 星期三</h5> -->
 							<!-- #for note : ${notelist} -->
 							<div class="colgroup leading">
 								<div class="width1 column first ta-center">
 									<img SRC="../img/preview-not-available.gif" alt="" />
 								</div>
 								<div class="width5 column">
-									<form id="${note.id}" method="post" action="notered" class="nyroModal">
-									  <input type="hidden" name="id" value="${note.id }" />
-									  <input type="submit" value="${note.name }" class="btn"/>
-									  
-									</form>
-									
+									<a href="read/${note.id }.html" target="_blank"><b class="big">${note.name }</b></a><br/>
+
 									<small><b></b> |  作者: <b>${note.author }</b> |  标签: <a href="#">${note.tags }</a> </small><br/>
 									<a href="#">删除</a> &middot; <a href="#">查看</a> &middot; <a href="#">编辑</a>
 									<br>
 									
 									<!-- Baidu Button BEGIN -->
-									<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare" data="{'text':'${note.name }'}">
+									<!-- <div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare" data="{'text':'${note.name }'}">
 									    <a class="bds_qzone">QQ </a>
 									    <a class="bds_tsina">新浪</a>
 									    <a class="bds_tqq">腾讯</a>
 									    <a class="bds_renren">人人</a>
 									    <span class="bds_more">更多</span>
-									</div>
+									</div> -->
 									
 									<!-- Baidu Button END -->
 									

@@ -321,7 +321,7 @@ public class AlbumController {
 		UserModel user=(UserModel) session.getAttribute("user");
 		session.getAttribute("user");
 		
-		
+		request.setAttribute("user", user);
 		if(user!=null){
 			System.out.println("uid="+user.getId());
 			request.setAttribute("uid", user.getId());

@@ -110,7 +110,7 @@
 	.p_number .add_chose a.reduce:hover{background-position:0 -16px;}
 	.p_number .add_chose a.add{background-position:-16px 0;}
 	.p_number .add_chose a.add:hover{background-position:-16px -16px;}
-	.p_number .add_chose .text{float:left;margin:0 5px;display:inline;border:solid 1px #ccc;padding:4px 3px 4px 8px;width:40px;height:25px; line-height:18px;font-size:14px;color:#990000;font-weight:800;}
+	.p_number .add_chose .text{float:left;margin:0 5px;display:inline;border:solid 1px #ccc;padding:4px 3px 4px 8px;width:40px;height:20px; line-height:18px;font-size:14px;color:#990000;font-weight:800;}
 	.p_number .buy{line-height:2em;}
 	.p_number .buy .total-font{font-family:Arial;font-size:26px;}
 	.p_number .buy .jifen{margin-left:20px;color:#ACACAC;}
@@ -162,11 +162,10 @@ $(document).ready(function(){
 	$(function() {
 		$("#contentLeft ul").sortable({ opacity: 0.6, cursor: 'move', update: function() {
 			var order = $(this).sortable("serialize") + '&action=updateRecordsListings'; 
-			//alert(order);
-			//$.post("updateDB.php", order, function(theResponse){
-			//	$("#contentRight").html(theResponse);
-			//}); 		
-			setTimeout("xyarray()",500);
+			
+			ssort();
+			
+			dline();
 		}								  
 		});
 	});
@@ -264,14 +263,15 @@ $(document).ready(function(){
 		<!-- Wrapper -->
 		<div class="wrapper">
 				<!-- Left column/section -->
-				<section class="column width6 first" style="width:400px;">					
+				<section class="column width6 first" style="height:450px;width:450px;">					
 
 					<h3></h3>
 					
-					<form id="sampleform" method="post" action="routepub">
+					<form id="sampleform" method="post" action="rclist">
+						<input type="hidden" name="id" value="${route.id}">
+						<div id="citylist"></div>
 						<fieldset>
 							<legend>${route.name}</legend>
-							
 							<p>
 								<label for="photo">出发日期</label>&nbsp;${route.startdateStr}&nbsp;<label for="photo">&nbsp;预计</label>&nbsp;${route.days}&nbsp;<label for="photo">天</label>
 							</p>
@@ -311,7 +311,7 @@ $(document).ready(function(){
 								</div>
 							</div> -->
 							<!-- <p class="box"><a href="javascript:alert(document.getElementById('routetage').value;);" class="btn btn-green">保存</a></p> -->
-							<p class="box"><input type="button" onclick="javascript:document.getElementById('sampleform').submit();" class="btn btn-green big" value="下一步"/> or <a href="#">取消</a></p>
+							<p class="box"><input type="button" onclick="javascript:submitForm();" class="btn btn-green big" value="下一步"/> or <a href="#">取消</a></p>
 
 						</fieldset>
 
@@ -321,23 +321,16 @@ $(document).ready(function(){
 				<!-- End of Left column/section -->
 				
 				<!-- Right column/section -->
-				<aside class="column width2" style="width:500px;height:460px;">
-					<!-- <p><a href="#" class="btn btn-special btn-green"><img SRC="../img/page_save.png" class="icon" alt=""/>发   布</a></p>
-					 -->
-					 <div class="content-box" style="width:500px;height:460px;">
-						<div id="contentRight" style="width:500px;height:460px;">
-						  <div id="my_canvas" style="width:100%;height:100%;"></div>
-						</div>
-
+				<aside class="column width2" style="width:500px;height:440px;">
+					 <div class="content-box" style="width:500px;height:440px;">
+						  <div id="my_canvas" style="width:500px;height:440px;"></div>
 					</div>
 				</aside>
 				<!-- End of Right column/section -->
-				
 		</div>
 		<!-- End of Wrapper -->
 	</div>
 	<!-- End of Page content -->
-	
 	<!-- Page footer -->
 	<footer id="bottom">
 		<div class="wrapper">
@@ -379,14 +372,32 @@ $(document).ready(function(){
 <script type="text/javascript" SRC="../at/at.js"></script>
 <script type="text/javascript">
 	var options = {
-		script: function (input) { return "http://localhost:8080/iyoutianxia/iytx/areajson?input="+input },
+		script: function (input) { return "http://localhost:8080/iyoutianxia/iytx/areajson?stype=city&input="+input },
 		varname:"input",
 		noresults:"没有找到结果",
 		callback: function (obj) {
-			add(-1,obj.id,obj.value);
+			//alert(latlngs.get(obj.id));
+			var ltmp=ls[ls.length-1];
+			ls[ls.length-1]=obj.id;
+			ls.push(ltmp);
+			
+			var txt='<span style="float: left;">'+obj.value+'</span><div class="p_number">'
+					+'<div class="f_l add_chose">'
+					+'<a class="reduce" onClick="setAmount.reduce(\'#d'+obj.id+'\')" href="javascript:void(0)">'
+					+'-</a>'
+					+'<input type="text" name="days" value="1" id="d'+obj.id+'" onKeyUp="setAmount.modify(\'#d'+obj.id+'\')" class="text" />'
+					+'<a class="add" onClick="setAmount.add(\'#d'+obj.id+'\')" href="javascript:void(0)">'
+					+'+</a>'
+					+'</div>'
+					+'</div>';
+			
+			//alert(ls.length);
+			add(-1,obj.id,txt);
 			document.getElementById('scity').value="";
 			document.getElementById('scity').style.display="none";
-			dxyadd(obj.value,obj.id);
+			//dxyadd(obj.value,obj.id);
+			
+			dline();
 		}
 	};
 	var as_json = new bsn.AutoSuggest('scity', options);
@@ -406,136 +417,198 @@ $(document).ready(function(){
 	}
 </script>
 <script type="text/javascript">
-var geocoder;
-var map;
-var query1 = new Array("${route.startcityStr}","${route.endcityStr}");
-function initialize() {
-  geocoder = new google.maps.Geocoder();
-    var myOptions = {
-        zoom: 4,//缩放比例
-        mapTypeId: google.maps.MapTypeId.ROADMAP //地图类型 ?MapTypeId.ROADMAP ?MapTypeId.SATELLITE ?MapTypeId.HYBRID ?MapTypeId.TERRAIN 
-
-    }
-    map = new google.maps.Map(document.getElementById("my_canvas"), myOptions);
-    dxy();
-    
-}
-
-function dxyadd(address,id){
-		   geocoder.geocode({ 'address': address }, function (results, status) { //地址解析
-		            if (status == google.maps.GeocoderStatus.OK) {
-		            	var result=results[0].geometry.location;
-		                map.setCenter(result);//依据解析的经度纬度设置坐标居中
-		                
-		                var x=result.lat();
-		                var y=result.lng();
-		                document.getElementById("mxys").innerHTML=document.getElementById("mxys").innerHTML+'<input type="text" id="m'+id+'" class="half title" value="'+(x+","+y)+'" name="mcc" />';
-		                var marker = new google.maps.Marker({
-		                    map: map,
-		                    position: results[0].geometry.location,
-		                    title:results[0].address_components[0].long_name,
-		                    animation: google.maps.Animation.DROP //坐标动画效果
-		                });
-		                var infowindow = new google.maps.InfoWindow({
-		                    content: "<span style='font-size:11px'><b>地址：</b>" + results[0].address_components[0].long_name + "<br>" +results[0].address_components[0].long_name + "</span>",
-		                    pixelOffset:0, //坐标偏移量，一般不用修改
-		                    position: results[0].geometry.location
-
-		                });
-		                //infowindow.open(map, marker);//默认打开信息窗口。点击做伴弹出信息窗口
-		                google.maps.event.addListener(marker, 'click', function () { infowindow.open(map, marker); });
-		            } else {
-		                alert("未能解析该地址的原因: " + status);
-		            }
-		        });
-		   setTimeout("xyarray()",2000);
-}
-function dxy(){
-	 for(var j = 0 ; j < query1.length ; j++){
-		   var address = query1[j];
-		   geocoder.geocode({ 'address': address }, function (results, status) { //地址解析
-		            if (status == google.maps.GeocoderStatus.OK) {
-		            	var result=results[0].geometry.location;
-		                map.setCenter(result);//依据解析的经度纬度设置坐标居中
-		                
-		                var x=result.lat();
-		                var y=result.lng();
-		                document.getElementById("sexys").innerHTML=document.getElementById("sexys").innerHTML+'<input type="text" id="se'+(x+","+y)+'" class="half title" value="'+(x+","+y)+'" name="secc" />';
-		                var marker = new google.maps.Marker({
-		                    map: map,
-		                    position: results[0].geometry.location,
-		                    title:results[0].address_components[0].long_name,
-		                    animation: google.maps.Animation.DROP //坐标动画效果
-		                });
-		                var infowindow = new google.maps.InfoWindow({
-		                    content: "<span style='font-size:11px'><b>地址：</b>" + results[0].address_components[0].long_name + "<br>" +results[0].address_components[0].long_name + "</span>",
-		                    pixelOffset:0, //坐标偏移量，一般不用修改
-		                    position: results[0].geometry.location
-
-		                });
-		                //infowindow.open(map, marker);//默认打开信息窗口。点击做伴弹出信息窗口
-		                google.maps.event.addListener(marker, 'click', function () { infowindow.open(map, marker); });
-		            } else {
-		                alert("未能解析该地址的原因: " + status);
-		            }
-		        });
-		  }
-	 //alert(st.length);
-	 setTimeout("xyarray()",2000);
-}
-
-var arr;
-function xyarray(){
-	//alert("d");
-	arr=new Array();
-	var seccs=document.getElementsByName("secc");
-	arr[0]=seccs[0].value;
 	
-	var s=document.getElementById("clist");
-  	var t=s.childNodes.length;
-  	//alert(t);
-  	var j=1;
-  	for (var i=1;i<t;i++){
-   		var sc=s.childNodes[i];
-   		//alert(document.getElementById("m"+sc.id).value);
-   		arr[j]=document.getElementById("m"+sc.id).value;
-   		j++;
-  	}
-  	
-  	arr[arr.length]=seccs[1].value;
-  	//alert(arr.length);
-  	setTimeout("dline()",500);
-}
+	
+var map;
+var geocoder;
+	var ls=new Array();
+	var rindex=1;
+	
+	var query1 = new Array("${route.startcity}","${route.endcity}"); 
+	function initialize() {
+		var ilt=new google.maps.LatLng(39.90402603,116.40753174);
+		geocoder = new google.maps.Geocoder();
+	    var myOptions = {
+	        zoom: 4,//缩放比例
+	        center:ilt,
+	        mapTypeId: google.maps.MapTypeId.ROADMAP //地图类型 ?MapTypeId.ROADMAP ?MapTypeId.SATELLITE ?MapTypeId.HYBRID ?MapTypeId.TERRAIN 
+	
+	    }
+	    map = new google.maps.Map(document.getElementById("my_canvas"), myOptions);
+	    for(var i=0;i<query1.length;i++){
+	    	ls.push(query1[i]);
+	    }
+	    dline();
+	}
+	
+	var polyline;
+	var polylinesArray = [];
+	//距离标记数组
+	var lenArray = []; 
+	function dline(){	
+		var flightPlanCoordinates = [];
+		if(lenArray){
+			for(var i=0;i<lenArray.length;i++){
+				lenArray[i].setMap(null);
+			}
+			lenArray=[];
+		}
+		var latlngbounds = new google.maps.LatLngBounds();
+		if(ls){
+			for (var i=0;i<ls.length;i++) {
+				//alert(ls[i]);
+				var loc = latlngs.get(ls[i]).split(',');
+				var lt=new google.maps.LatLng(loc[0], loc[1]);
+				latlngbounds.extend(lt);  
+	            flightPlanCoordinates.push(lt);
+	            
+	            var marker = new google.maps.Marker({
+	                map: map,
+	                position: lt,
+	                animation: google.maps.Animation.DROP //坐标动画效果
+	            });
+	            lenArray.push(marker);
+	            if(i==0){
+	            	var infowindow = new google.maps.InfoWindow({
+		                content: "<span style='font-size:11px'>起点</span>",
+		                pixelOffset:0, //坐标偏移量，一般不用修改
+		                position: lt
 
-function dline(){	
-	//alert(document.getElementById("mxys").innerHTML);
-	//xyarray();
-	//var mccs=arr;
-	//alert(mccs.length);
-    var polyOptions = {
-      strokeColor: '#FF0000',    // 颜色
-      strokeOpacity: 1.0,    // 透明度
-      strokeWeight: 2,  // 宽度
-      path:[]
-    }
-    var poly = new google.maps.Polyline(polyOptions);
-    poly.setMap(map);
-    var path = poly.getPath(); 
-    /* 循环标出所有坐标 */
-    for(var i=0; i<arr.length; i++){
-    	//alert(ccs[i]);
-    	//alert(arr[i]);
-        var loc = arr[i].split(',');
-		//alert(loc);
-           //获取线条的坐标
-        path.push(new google.maps.LatLng(parseFloat(loc[0]).toFixed(8),parseFloat(loc[1]).toFixed(8)));    //为线条添加标记坐标
-        //生成标记图标
-       
-    }
-    //var path = poly.getPath();    //获取线条的坐标
-    //path.push(new google.maps.LatLng(parseFloat(seccs[1].value.split(",")[0]).toFixed(8),parseFloat(seccs[1].value.split(",")[1]).toFixed(8)));    //为线条添加标记坐标
-    
-}
+		            });
+	            }
+	            else if(i==ls.length-1){
+	            	var infowindow = new google.maps.InfoWindow({
+		                content: "<span style='font-size:11px'>终点</span>",
+		                pixelOffset:0, //坐标偏移量，一般不用修改
+		                position: lt
+
+		            });
+	            }
+	            else{
+	            	var infowindow = new google.maps.InfoWindow({
+		                content: "<span style='font-size:11px'>第"+(i+1)+"站</span>",
+		                pixelOffset:0, //坐标偏移量，一般不用修改
+		                position: lt
+
+		            });
+	            }
+	            
+			   	
+			   	infowindow.open(map, marker);
+	        }
+		}
+		//alert(getZoomByBounds(map,latlngbounds));
+		//map.setCenter(latlngbounds.getCenter(),map.getBoundsZoomLevel(latlngbounds)); 
+		var polylineOptions = {
+		    path : flightPlanCoordinates,
+		    map : map,
+		    strokeColor : "#FF0000",
+		    strokeOpacity : 1.0,
+		    strokeWeight : 2
+		};
+		polyline = new google.maps.Polyline(polylineOptions);
+	   
+	    //清除原有折线路径
+	    if (polylinesArray) {
+	        for (var i=0;i<polylinesArray.length;i++) {
+	            polylinesArray[i].setMap(null);
+	        }
+	        polylinesArray = [];
+	    }
+	    polyline.setMap(map);
+	    polylinesArray.push(polyline);
+		
+		
+	}
+	function ssort(){
+		var stmp=ls[0];
+		var etmp=ls[ls.length-1];
+		
+		var lstmp=new Array();
+		lstmp[0]=stmp;
+		
+		var s=document.getElementById('clist');
+	  	var t=s.childNodes.length;
+	  	for (var i=1;i<t;i++){
+	  		//alert(s.childNodes[i].innerHTML);
+	  		lstmp[i]=s.childNodes[i].id;
+	  	}
+	  	lstmp[lstmp.length]=etmp;
+	  	ls=[];
+	  	ls=lstmp;
+		
+	}
+	
+	function HashMap(){
+	    var size = 0;
+	    var entry = new Object();
+	    
+	    this.put = function (key , value){
+	        if(!this.containsKey(key)){
+	            size ++ ;
+	        }
+	        entry[key] = value;
+	    }
+	    this.get = function (key){
+	        if( this.containsKey(key) ){
+	            return entry[key];
+	        }else{
+	            return null;
+	        }
+	    }
+	    this.remove = function ( key ){
+	        if( delete entry[key] ){
+	            size --;
+	        }
+	    }
+	    this.containsKey = function ( key ){
+	        return (key in entry);
+	    }
+	    
+	    this.containsValue = function ( value ){
+	        for(var prop in entry){
+	            if(entry[prop] == value){
+	                return true;
+	            }
+	        }
+	        return false;
+	    }
+	    
+	    this.values = function (){
+	        var values = new Array(size);
+	        for(var prop in entry){
+	            values.push(entry[prop]);
+	        }
+	        return values;
+	    }
+	    
+	    this.keys = function (){
+	        var keys = new Array(size);
+	        for(var prop in entry){
+	            keys.push(prop);
+	        }
+	        return keys;
+	    }
+	    
+	    this.size = function (){
+	        return size;
+	    }
+	}
+	function submitForm(){
+		var cl=document.getElementById("citylist");
+		var txt="";
+		for(var i=0;i<ls.length;i++){
+			txt+='<input type="hidden" name="citylistid" value="'+ls[i]+'" />';
+		}
+		cl.innerHTML=txt;
+		document.getElementById("sampleform").submit();
+	}
+	
+	var latlngs=new HashMap();
+	<!-- #for area : ${arealist } -->
+		//latlng["${area.id}"]="${area.lat},${area.lng}";
+		latlngs.put("${area.id}","${area.lat},${area.lng}");
+	<!-- #end -->
 </script>
 </body>
 </html>

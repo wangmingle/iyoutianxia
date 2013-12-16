@@ -11,10 +11,7 @@
 <link rel="stylesheet" href="../css/style.css" type="text/css" />
 <link rel="stylesheet" href="../css/custom.css" type="text/css" />
 <script type="text/javascript" SRC="../js/swfobject.js"></script>
-<script type="text/javascript" SRC="../js/jquery-1.8.3.js"></script>
-<script type="text/javascript" SRC="../js/jquery.ui.core.min.js"></script>
-<script type="text/javascript" SRC="../js/jquery.ui.widget.min.js"></script>
-<script type="text/javascript" SRC="../js/jquery.ui.tabs.min.js"></script>
+<script type="text/javascript" SRC="../js/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" SRC="../js/jquery.tipTip.min.js"></script>
 <script type="text/javascript" SRC="../js/jquery.superfish.min.js"></script>
 <script type="text/javascript" SRC="../js/jquery.supersubs.min.js"></script>
@@ -46,13 +43,18 @@
 <script type="text/javascript" SRC="../js/payfor.js"></script>
 <script type="text/javascript" SRC="../My97DatePicker/WdatePicker.js"></script>
 
+<script type="text/javascript" SRC="../js/jquery-ui-1.7.1.custom.min.js"></script>
+
 <script type="text/javascript" SRC="../bsn/bsn.AutoSuggest_2.1.3_comp.js"></script>
 
 <link rel="stylesheet" type="text/css" href="../bsn/autosuggest_inquisitor.css"/>
+
+<script type="text/javascript" src="http://ditu.google.com/maps/api/js?sensor=false&language=zh-CN"></script>
+
 <!-- Internet Explorer Fixes --> 
 <!--[if IE]>
 <link rel="stylesheet" type="text/css" media="all" href="../../css/ie.css"/>
-<script src="../../js/html5.js"></script>
+<script src="../js/html5.js"></script>
 <![endif]-->
 <!--Upgrade MSIE5.5-7 to be compatible with MSIE8: http://ie7-js.googlecode.com/svn/version/2.1(beta3)/IE8.js -->
 <!--[if lt IE 8]>
@@ -113,7 +115,37 @@
 	.p_number .buy .total-font{font-family:Arial;font-size:26px;}
 	.p_number .buy .jifen{margin-left:20px;color:#ACACAC;}
 	.p_number .buy .jifen b{margin:0 3px;}
+
+
+	
+	
+	#contentLeft {
+		width: 300px;
+	}
+	
+	#contentLeft li {
+		list-style: none;
+		height:20px;
+		margin: 0 0 4px 0;
+		padding: 10px;
+		background-color:#00CCCC;
+		border: #CCCCCC solid 1px;
+		color:#fff;
+	}
+	
+	
+		
+	
+	#contentRight {
+		width: 450px;
+		height:450px;
+		padding:10px;
+		color:#FFFFFF;
+	}
+
 </style>
+
+
 <script type="text/javascript">
 
 /* sample tags */
@@ -127,7 +159,16 @@ var tags=[
 ];
 
 $(document).ready(function(){
-	
+	$(function() {
+		$("#contentLeft ul").sortable({ opacity: 0.6, cursor: 'move', update: function() {
+			var order = $(this).sortable("serialize") + '&action=updateRecordsListings'; 
+			
+			ssort();
+			
+			dline();
+		}								  
+		});
+	});
 	/* setup navigation, content boxes, etc... */
 	Administry.setup();
 	
@@ -222,91 +263,35 @@ $(document).ready(function(){
 		<!-- Wrapper -->
 		<div class="wrapper">
 				<!-- Left column/section -->
-				<section class="column width6 first">					
+				<section class="column width6 first" style="height:450px;width:450px;">					
 
-					<h3>发布行程</h3>
+					<h3></h3>
 					
-					<form id="sampleform" method="post" action="routepub">
+					<form id="sampleform" method="post" action="rclist">
+						<input type="hidden" name="id" value="${route.id}">
+						<div id="citylist"></div>
 						<fieldset>
-							<legend>行程信息</legend>
+							<legend>${route.name}</legend>
 							<p>
-								<label class="required" for="routename">行程标题</label><br>
-								<input type="text" id="routename" class="half title" value="" name="name"/>
-								<small>行程标题突出关键词便于检索</small>
+								<label for="photo">出发日期</label>&nbsp;${route.startdateStr}&nbsp;<label for="photo">&nbsp;预计</label>&nbsp;${route.days}&nbsp;<label for="photo">天</label>
 							</p>
 							<p>
-								<!-- <span class="label label-silver">中国</span>&nbsp;<span class="label label-silver">山东</span> -->
-								<!-- <br/> -->
-								<label class="required" for="routetage">行程关键词</label>
-								<input type="text" id="routetage" class="example title" placeholder="标签输入完，请回车确认" style="width: 720px;height: 30px;" value="" name="tags"/>
-							</p>
-							<p>
-								<label class="required" for="routename">行程出发地</label><br>
-								<input type="hidden" id="startcity" value="" name="startcity"/>
-								<input type="text" id="scity" class="half title" value="" name="scity"/>
-							</p>
-							<p>
-								<label class="required" for="routename">预计出发日期</label><br>
-								<input class="Wdate half title" type="text" id="startdateStr" name="startdateStr" onFocus="WdatePicker({isShowClear:false,readOnly:true})"/>
-							</p>
-							<p>
-								<label class="required" for="routename">预计天数</label><br>
-								<div class="p_number">
-								<div class="f_l add_chose">
-									<a class="reduce" onClick="setAmount.reduce('#days')" href="javascript:void(0)">
-									-</a>
-									<input type="text" name="days" value="1" id="days" onKeyUp="setAmount.modify('#days')" class="text" />
-									<a class="add" onClick="setAmount.add('#days')" href="javascript:void(0)">
-									+</a>
-								</div>
-								</div>
+								<label for="photo">出发城市</label>&nbsp; ${route.startcityStr}
 							</p>
 							
 							<p>
-								<label class="required" for="routename">行程返回地</label><br>
-								<input type="hidden" id="endcity" value="" name="endcity"/>
-								<input type="text" id="ecity" class="half title" value="" name="ecity"/>
+							<div id="contentLeft">
+								<ul id="clist">
+									<!-- #for day : ${dayslist } -->
+									<li>${day.citynameStr }</li>
+									<!-- #end -->
+								</ul>	
+							</div>
 							</p>
 							
-							
 							<p>
-								<label class="required" for="routetage">邀请参与人</label>
-								<textarea id="inputors" class="inputor" name="allfriends"> </textarea>
-								<small>输入空格 @即可邀请人</small>
+								<label for="photo">返回城市</label>&nbsp; ${route.endcityStr}
 							</p>
-							<p>
-								<label class="required" for="routetage">行程概括</label>
-		      					<div id="editable" class="inputor1" contentEditable="true">
-								  
-								</div>
-								<small>输入空格 @邀请人；空格 #关联其他行程</small>
-							<p>
-							<script type="text/javascript">
-							var ss=
-							$('#routetage')
-								.textext({ plugins : 'autocomplete suggestions tags',
-										   html    : {
-							                	tag: '<div class="text-tag"><div class="text-button"><span class="text-label"/><a class="custom-edit"/><a class="text-remove"/></div></div>'
-							               },
-							               suggestions: [
-							                             '旅游',
-							                             '风景',
-							                             '拼团',
-							                             '自由行'
-							               ]
-										}
-								).bind('tagClick', function(e, tag, value, callback){
-									var newValue = window.prompt('更改为', value);
-								
-									if(newValue)
-										callback(newValue);
-								});
-						</script>
-							<!-- <p>
-								<label class="required" for="productdesc">行程详细</label>
-								<textarea id="productdesc" class="large full" name="context"></textarea>
-							</p> -->
-							
 							<!-- <div class="clearfix leading">
 								<div class="column width3 first">
 									<p>
@@ -320,7 +305,7 @@ $(document).ready(function(){
 								</div>
 							</div> -->
 							<!-- <p class="box"><a href="javascript:alert(document.getElementById('routetage').value;);" class="btn btn-green">保存</a></p> -->
-							<p class="box"><input type="button" onclick="javascript:document.getElementById('sampleform').submit();" class="btn btn-green big" value="下一步"/> or <a href="#">取消</a></p>
+							<p class="box"><input type="button" onclick="javascript:submitForm();" class="btn btn-green big" value="下一步"/> or <a href="#">取消</a></p>
 
 						</fieldset>
 
@@ -330,37 +315,16 @@ $(document).ready(function(){
 				<!-- End of Left column/section -->
 				
 				<!-- Right column/section -->
-				<!-- <aside class="column width2">
-					<p><a href="#" class="btn btn-special btn-green"><img SRC="../img/page_save.png" class="icon" alt=""/>发   布</a></p>
-					<div class="content-box">
-						<header>
-							<h3>权限信息</h3>
-						</header>
-						<section>
-							<p>
-								<select id="visibility" class="full" name="visibility" style="width: 200px;">
-									<option value="1" selected>公开</option>
-									<option value="2">私有</option>
-								</select>
-							</p>
-						</section>
-					</div>
-					
-					<div id="rightmenu">
-						<dl class="first">
-							<dt><img width="16" height="16" alt="" SRC="../img/help.png"></dt>
-							<dd><a href="#">帮助</a></dd>
-							<dd class="last">如果你需要帮助，请查看帮助信息</dd>							
-						</dl>
+				<!-- <aside class="column width2" style="width:500px;height:440px;">
+					 <div class="content-box" style="width:500px;height:440px;">
+						  <div id="my_canvas" style="width:500px;height:440px;"></div>
 					</div>
 				</aside> -->
 				<!-- End of Right column/section -->
-				
 		</div>
 		<!-- End of Wrapper -->
 	</div>
 	<!-- End of Page content -->
-	
 	<!-- Page footer -->
 	<footer id="bottom">
 		<div class="wrapper">
@@ -405,16 +369,230 @@ $(document).ready(function(){
 		script: function (input) { return "http://localhost:8080/iyoutianxia/iytx/areajson?stype=city&input="+input },
 		varname:"input",
 		noresults:"没有找到结果",
-		callback: function (obj) {document.getElementById('startcity').value = obj.id; }
+		callback: function (obj) {
+			//alert(latlngs.get(obj.id));
+			var ltmp=ls[ls.length-1];
+			ls[ls.length-1]=obj.id;
+			ls.push(ltmp);
+			
+			//alert(ls.length);
+			add(-1,obj.id,obj.value);
+			document.getElementById('scity').value="";
+			document.getElementById('scity').style.display="none";
+			//dxyadd(obj.value,obj.id);
+			
+			dline();
+		}
 	};
 	var as_json = new bsn.AutoSuggest('scity', options);
-	var options = {
-			script: function (input) { return "http://localhost:8080/iyoutianxia/iytx/areajson?stype=city&input="+input },
-			varname:"input",
-			noresults:"没有找到结果",
-			callback: function (obj) {document.getElementById('endcity').value = obj.id; }
+	function add(n,id,txt){
+	  	var s=document.getElementById('clist');
+	  	var t=s.childNodes.length;
+	  	var li= document.createElement("li");
+	  	li.innerHTML=txt;
+	  	li.id=id;
+	  	for (var i=0;i<t;i++){
+	   		if (n==-1){
+	    		s.appendChild(li);
+	   		}else if (i==n-1){
+	    		s.insertBefore(li,s.childNodes[i]);
+	   		}
+	  	}
+	}
+</script>
+<script type="text/javascript">
+	
+	
+var map;
+var geocoder;
+	var ls=new Array();
+	var rindex=1;
+	
+	var query1 = new Array("${route.startcity}","${route.endcity}"); 
+	function initialize() {
+		var ilt=new google.maps.LatLng(39.90402603,116.40753174);
+		geocoder = new google.maps.Geocoder();
+	    var myOptions = {
+	        zoom: 4,//缩放比例
+	        center:ilt,
+	        mapTypeId: google.maps.MapTypeId.ROADMAP //地图类型 ?MapTypeId.ROADMAP ?MapTypeId.SATELLITE ?MapTypeId.HYBRID ?MapTypeId.TERRAIN 
+	
+	    }
+	    map = new google.maps.Map(document.getElementById("my_canvas"), myOptions);
+	    for(var i=0;i<query1.length;i++){
+	    	ls.push(query1[i]);
+	    }
+	    dline();
+	}
+	
+	var polyline;
+	var polylinesArray = [];
+	//距离标记数组
+	var lenArray = []; 
+	function dline(){	
+		var flightPlanCoordinates = [];
+		if(lenArray){
+			for(var i=0;i<lenArray.length;i++){
+				lenArray[i].setMap(null);
+			}
+			lenArray=[];
+		}
+		var latlngbounds = new google.maps.LatLngBounds();
+		if(ls){
+			for (var i=0;i<ls.length;i++) {
+				//alert(ls[i]);
+				var loc = latlngs.get(ls[i]).split(',');
+				var lt=new google.maps.LatLng(loc[0], loc[1]);
+				latlngbounds.extend(lt);  
+	            flightPlanCoordinates.push(lt);
+	            
+	            var marker = new google.maps.Marker({
+	                map: map,
+	                position: lt,
+	                animation: google.maps.Animation.DROP //坐标动画效果
+	            });
+	            lenArray.push(marker);
+	            if(i==0){
+	            	var infowindow = new google.maps.InfoWindow({
+		                content: "<span style='font-size:11px'>起点</span>",
+		                pixelOffset:0, //坐标偏移量，一般不用修改
+		                position: lt
+
+		            });
+	            }
+	            else if(i==ls.length-1){
+	            	var infowindow = new google.maps.InfoWindow({
+		                content: "<span style='font-size:11px'>终点</span>",
+		                pixelOffset:0, //坐标偏移量，一般不用修改
+		                position: lt
+
+		            });
+	            }
+	            else{
+	            	var infowindow = new google.maps.InfoWindow({
+		                content: "<span style='font-size:11px'>第"+(i+1)+"站</span>",
+		                pixelOffset:0, //坐标偏移量，一般不用修改
+		                position: lt
+
+		            });
+	            }
+	            
+			   	
+			   	infowindow.open(map, marker);
+	        }
+		}
+		//alert(getZoomByBounds(map,latlngbounds));
+		//map.setCenter(latlngbounds.getCenter(),map.getBoundsZoomLevel(latlngbounds)); 
+		var polylineOptions = {
+		    path : flightPlanCoordinates,
+		    map : map,
+		    strokeColor : "#FF0000",
+		    strokeOpacity : 1.0,
+		    strokeWeight : 2
 		};
-		var as_json = new bsn.AutoSuggest('ecity', options);
+		polyline = new google.maps.Polyline(polylineOptions);
+	   
+	    //清除原有折线路径
+	    if (polylinesArray) {
+	        for (var i=0;i<polylinesArray.length;i++) {
+	            polylinesArray[i].setMap(null);
+	        }
+	        polylinesArray = [];
+	    }
+	    polyline.setMap(map);
+	    polylinesArray.push(polyline);
+		
+		
+	}
+	function ssort(){
+		var stmp=ls[0];
+		var etmp=ls[ls.length-1];
+		
+		var lstmp=new Array();
+		lstmp[0]=stmp;
+		
+		var s=document.getElementById('clist');
+	  	var t=s.childNodes.length;
+	  	for (var i=1;i<t;i++){
+	  		//alert(s.childNodes[i].innerHTML);
+	  		lstmp[i]=s.childNodes[i].id;
+	  	}
+	  	lstmp[lstmp.length]=etmp;
+	  	ls=[];
+	  	ls=lstmp;
+		
+	}
+	
+	function HashMap(){
+	    var size = 0;
+	    var entry = new Object();
+	    
+	    this.put = function (key , value){
+	        if(!this.containsKey(key)){
+	            size ++ ;
+	        }
+	        entry[key] = value;
+	    }
+	    this.get = function (key){
+	        if( this.containsKey(key) ){
+	            return entry[key];
+	        }else{
+	            return null;
+	        }
+	    }
+	    this.remove = function ( key ){
+	        if( delete entry[key] ){
+	            size --;
+	        }
+	    }
+	    this.containsKey = function ( key ){
+	        return (key in entry);
+	    }
+	    
+	    this.containsValue = function ( value ){
+	        for(var prop in entry){
+	            if(entry[prop] == value){
+	                return true;
+	            }
+	        }
+	        return false;
+	    }
+	    
+	    this.values = function (){
+	        var values = new Array(size);
+	        for(var prop in entry){
+	            values.push(entry[prop]);
+	        }
+	        return values;
+	    }
+	    
+	    this.keys = function (){
+	        var keys = new Array(size);
+	        for(var prop in entry){
+	            keys.push(prop);
+	        }
+	        return keys;
+	    }
+	    
+	    this.size = function (){
+	        return size;
+	    }
+	}
+	function submitForm(){
+		var cl=document.getElementById("citylist");
+		var txt="";
+		for(var i=0;i<ls.length;i++){
+			txt+='<input type="hidden" name="citylistid" value="'+ls[i]+'" />';
+		}
+		cl.innerHTML=txt;
+		document.getElementById("sampleform").submit();
+	}
+	
+	var latlngs=new HashMap();
+	<!-- #for area : ${arealist } -->
+		//latlng["${area.id}"]="${area.lat},${area.lng}";
+		latlngs.put("${area.id}","${area.lat},${area.lng}");
+	<!-- #end -->
 </script>
 </body>
 </html>

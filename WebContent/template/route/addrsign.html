@@ -11,10 +11,7 @@
 <link rel="stylesheet" href="../css/style.css" type="text/css" />
 <link rel="stylesheet" href="../css/custom.css" type="text/css" />
 <script type="text/javascript" SRC="../js/swfobject.js"></script>
-<script type="text/javascript" SRC="../js/jquery-1.8.3.js"></script>
-<script type="text/javascript" SRC="../js/jquery.ui.core.min.js"></script>
-<script type="text/javascript" SRC="../js/jquery.ui.widget.min.js"></script>
-<script type="text/javascript" SRC="../js/jquery.ui.tabs.min.js"></script>
+<script type="text/javascript" SRC="../js/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" SRC="../js/jquery.tipTip.min.js"></script>
 <script type="text/javascript" SRC="../js/jquery.superfish.min.js"></script>
 <script type="text/javascript" SRC="../js/jquery.supersubs.min.js"></script>
@@ -46,13 +43,18 @@
 <script type="text/javascript" SRC="../js/payfor.js"></script>
 <script type="text/javascript" SRC="../My97DatePicker/WdatePicker.js"></script>
 
+<script type="text/javascript" SRC="../js/jquery-ui-1.7.1.custom.min.js"></script>
+
 <script type="text/javascript" SRC="../bsn/bsn.AutoSuggest_2.1.3_comp.js"></script>
 
 <link rel="stylesheet" type="text/css" href="../bsn/autosuggest_inquisitor.css"/>
+
+<script type="text/javascript" src="http://ditu.google.com/maps/api/js?sensor=false&language=zh-CN"></script>
+
 <!-- Internet Explorer Fixes --> 
 <!--[if IE]>
 <link rel="stylesheet" type="text/css" media="all" href="../../css/ie.css"/>
-<script src="../../js/html5.js"></script>
+<script src="../js/html5.js"></script>
 <![endif]-->
 <!--Upgrade MSIE5.5-7 to be compatible with MSIE8: http://ie7-js.googlecode.com/svn/version/2.1(beta3)/IE8.js -->
 <!--[if lt IE 8]>
@@ -113,7 +115,37 @@
 	.p_number .buy .total-font{font-family:Arial;font-size:26px;}
 	.p_number .buy .jifen{margin-left:20px;color:#ACACAC;}
 	.p_number .buy .jifen b{margin:0 3px;}
+
+
+	
+	
+	#contentLeft {
+		width: 300px;
+	}
+	
+	#contentLeft li {
+		list-style: none;
+		height:20px;
+		margin: 0 0 4px 0;
+		padding: 10px;
+		background-color:#00CCCC;
+		border: #CCCCCC solid 1px;
+		color:#fff;
+	}
+	
+	
+		
+	
+	#contentRight {
+		width: 450px;
+		height:450px;
+		padding:10px;
+		color:#FFFFFF;
+	}
+
 </style>
+
+
 <script type="text/javascript">
 
 /* sample tags */
@@ -127,7 +159,17 @@ var tags=[
 ];
 
 $(document).ready(function(){
-	
+	$(function() {
+		$("#contentLeft ul").sortable({ opacity: 0.6, cursor: 'move', update: function() {
+			var order = $(this).sortable("serialize") + '&action=updateRecordsListings'; 
+			//alert(order);
+			//$.post("updateDB.php", order, function(theResponse){
+			//	$("#contentRight").html(theResponse);
+			//}); 		
+			setTimeout("xyarray()",500);
+		}								  
+		});
+	});
 	/* setup navigation, content boxes, etc... */
 	Administry.setup();
 	
@@ -203,7 +245,7 @@ $(document).ready(function(){
 });
 </script>
 </head>
-<body>
+<body onload="initialize()">
 	<!-- Header -->
 	<!-- #include /header.html -->
 	<!-- End of Header -->
@@ -222,105 +264,75 @@ $(document).ready(function(){
 		<!-- Wrapper -->
 		<div class="wrapper">
 				<!-- Left column/section -->
-				<section class="column width6 first">					
-
-					<h3>发布行程</h3>
-					
-					<form id="sampleform" method="post" action="routepub">
+				<section class="column width6 first" style="height:550px;width:450px;">					
+					<form id="sampleform" method="post" action="areasign">
 						<fieldset>
-							<legend>行程信息</legend>
+							<input type="hidden" id="lat" value="" name="lat" />
+							<input type="hidden" id="lng" value="" name="lng" />
+							<input type="hidden" id="addr" value="" name="addr" />
 							<p>
-								<label class="required" for="routename">行程标题</label><br>
-								<input type="text" id="routename" class="half title" value="" name="name"/>
-								<small>行程标题突出关键词便于检索</small>
+								<input type="text" id="name" class="half title" style="width:350px;" value="" name="name" />
+								<a href="javascript: //;" onclick="ggg()" class="btn">搜&nbsp;&nbsp;&nbsp;索</a>
 							</p>
 							<p>
-								<!-- <span class="label label-silver">中国</span>&nbsp;<span class="label label-silver">山东</span> -->
-								<!-- <br/> -->
-								<label class="required" for="routetage">行程关键词</label>
-								<input type="text" id="routetage" class="example title" placeholder="标签输入完，请回车确认" style="width: 720px;height: 30px;" value="" name="tags"/>
+								<label class="required" for="producttitle">标记类型</label>
+								<select id="stype" class="full" name="stype" onchange="ctype(this)">
+									<option value="country" selected>国家</option>
+									<option value="city">省/市</option>
+									<option value="attractions">景点</option>
+									<option value="food">美食</option>
+									<option value="shopping">购物</option>
+									<option value="activity">活动</option>
+									<option value="traffic">交通</option>
+									<option value="others">其他</option>
+								</select>
+							</p>
+							<p id="scontinent" style="display: block;">
+								<label class="required" for="producttitle">所属大洲</label>
+								<select id="continent" class="full" name="continent">
+									<option value="asia" selected>亚洲 Asia</option>
+									<option value="europe">欧洲 Europe</option>
+									<option value="africa">非洲 Africa</option>
+									<option value="northamerica">北美 North America</option>
+									<option value="southamerica">南美 South America</option>
+									<option value="oceania">大洋洲 Oceania</option>
+									<option value="antarctica">南极洲 Antarctica</option>
+								</select>
+							</p>
+							<p id="scountry" style="display: none;">
+								<label class="required" for="country">所属国家</label>
+								<input type="hidden" id="country" value="" name="country" />
+								<input type="text" id="countryname" class="half title" style="width:400px;" value="" name="countryname" />
+							</p>
+							<p id="scity" style="display: none">
+								<label class="required" for="city">所属省/市</label>
+								<input type="hidden" id="city" value="" name="city" />
+								<input type="text" id="cityname" class="half title" style="width:400px;" value="" name="cityname" />
 							</p>
 							<p>
-								<label class="required" for="routename">行程出发地</label><br>
-								<input type="hidden" id="startcity" value="" name="startcity"/>
-								<input type="text" id="scity" class="half title" value="" name="scity"/>
+								<label class="required" for="fullname">全称</label><br>
+								<input type="text" id="fullname" class="half title" style="width:400px;" value="" name="fullname" />
 							</p>
 							<p>
-								<label class="required" for="routename">预计出发日期</label><br>
-								<input class="Wdate half title" type="text" id="startdateStr" name="startdateStr" onFocus="WdatePicker({isShowClear:false,readOnly:true})"/>
+								<label class="required" for="ename">英文名称</label><br>
+								<input type="text" id="ename" class="half title" style="width:400px;" value="" name="ename" />
 							</p>
 							<p>
-								<label class="required" for="routename">预计天数</label><br>
-								<div class="p_number">
-								<div class="f_l add_chose">
-									<a class="reduce" onClick="setAmount.reduce('#days')" href="javascript:void(0)">
-									-</a>
-									<input type="text" name="days" value="1" id="days" onKeyUp="setAmount.modify('#days')" class="text" />
-									<a class="add" onClick="setAmount.add('#days')" href="javascript:void(0)">
-									+</a>
-								</div>
-								</div>
+								<label class="required" for="pyname">汉语拼音</label><br>
+								<input type="text" id="pyname" class="half title" style="width:400px;" value="" name="pyname" />
 							</p>
 							
 							<p>
-								<label class="required" for="routename">行程返回地</label><br>
-								<input type="hidden" id="endcity" value="" name="endcity"/>
-								<input type="text" id="ecity" class="half title" value="" name="ecity"/>
+								<label class="required" for="remark">描述</label><br>
+								<textarea id="remark" class="medium half" style="height: 35px;resize:none;width: 400px;" rows="2" cols="200" name="remark"></textarea>
 							</p>
 							
-							
 							<p>
-								<label class="required" for="routetage">邀请参与人</label>
-								<textarea id="inputors" class="inputor" name="allfriends"> </textarea>
-								<small>输入空格 @即可邀请人</small>
+							
+							<p class="box">
+								<input type="button" onclick="javascript:document.getElementById('sampleform').submit();" class="btn btn-green big" value="下一步"/> 
+								or <a href="#">取消</a>
 							</p>
-							<p>
-								<label class="required" for="routetage">行程概括</label>
-		      					<div id="editable" class="inputor1" contentEditable="true">
-								  
-								</div>
-								<small>输入空格 @邀请人；空格 #关联其他行程</small>
-							<p>
-							<script type="text/javascript">
-							var ss=
-							$('#routetage')
-								.textext({ plugins : 'autocomplete suggestions tags',
-										   html    : {
-							                	tag: '<div class="text-tag"><div class="text-button"><span class="text-label"/><a class="custom-edit"/><a class="text-remove"/></div></div>'
-							               },
-							               suggestions: [
-							                             '旅游',
-							                             '风景',
-							                             '拼团',
-							                             '自由行'
-							               ]
-										}
-								).bind('tagClick', function(e, tag, value, callback){
-									var newValue = window.prompt('更改为', value);
-								
-									if(newValue)
-										callback(newValue);
-								});
-						</script>
-							<!-- <p>
-								<label class="required" for="productdesc">行程详细</label>
-								<textarea id="productdesc" class="large full" name="context"></textarea>
-							</p> -->
-							
-							<!-- <div class="clearfix leading">
-								<div class="column width3 first">
-									<p>
-										<label for="productcat">游记类型</label><br/>
-										<select id="productcat" class="full" name="productcat">
-											
-										</select>
-										<small></small>
-									</p>
-									<p><a href="#">+ 自定义游记类型</a></p>
-								</div>
-							</div> -->
-							<!-- <p class="box"><a href="javascript:alert(document.getElementById('routetage').value;);" class="btn btn-green">保存</a></p> -->
-							<p class="box"><input type="button" onclick="javascript:document.getElementById('sampleform').submit();" class="btn btn-green big" value="下一步"/> or <a href="#">取消</a></p>
 
 						</fieldset>
 
@@ -330,37 +342,16 @@ $(document).ready(function(){
 				<!-- End of Left column/section -->
 				
 				<!-- Right column/section -->
-				<!-- <aside class="column width2">
-					<p><a href="#" class="btn btn-special btn-green"><img SRC="../img/page_save.png" class="icon" alt=""/>发   布</a></p>
-					<div class="content-box">
-						<header>
-							<h3>权限信息</h3>
-						</header>
-						<section>
-							<p>
-								<select id="visibility" class="full" name="visibility" style="width: 200px;">
-									<option value="1" selected>公开</option>
-									<option value="2">私有</option>
-								</select>
-							</p>
-						</section>
+				<aside class="column width2" style="width:500px;height:440px;">
+					<div class="content-box" style="width:500px;height:440px;">
+						  <div id="my_canvas" style="width:500px;height:440px;"></div>
 					</div>
-					
-					<div id="rightmenu">
-						<dl class="first">
-							<dt><img width="16" height="16" alt="" SRC="../img/help.png"></dt>
-							<dd><a href="#">帮助</a></dd>
-							<dd class="last">如果你需要帮助，请查看帮助信息</dd>							
-						</dl>
-					</div>
-				</aside> -->
+				</aside>
 				<!-- End of Right column/section -->
-				
 		</div>
 		<!-- End of Wrapper -->
 	</div>
 	<!-- End of Page content -->
-	
 	<!-- Page footer -->
 	<footer id="bottom">
 		<div class="wrapper">
@@ -402,19 +393,118 @@ $(document).ready(function(){
 <script type="text/javascript" SRC="../at/at.js"></script>
 <script type="text/javascript">
 	var options = {
-		script: function (input) { return "http://localhost:8080/iyoutianxia/iytx/areajson?stype=city&input="+input },
+		script: function (input) { return "http://localhost:8080/iyoutianxia/iytx/areajson?stype=country&input="+input },
 		varname:"input",
-		noresults:"没有找到结果",
-		callback: function (obj) {document.getElementById('startcity').value = obj.id; }
+		noresults:"没有找到该国家自定义添加",
+		callback: function (obj) {
+			document.getElementById('country').value=obj.id;
+		}
 	};
-	var as_json = new bsn.AutoSuggest('scity', options);
-	var options = {
+	var as_json = new bsn.AutoSuggest('countryname', options);
+	var options1 = {
 			script: function (input) { return "http://localhost:8080/iyoutianxia/iytx/areajson?stype=city&input="+input },
 			varname:"input",
-			noresults:"没有找到结果",
-			callback: function (obj) {document.getElementById('endcity').value = obj.id; }
+			noresults:"没有找到该省/市自定义添加",
+			callback: function (obj) {
+				alert(obj.latlng);
+				document.getElementById('city').value=obj.id;
+			}
 		};
-		var as_json = new bsn.AutoSuggest('ecity', options);
+		var as_json1 = new bsn.AutoSuggest('cityname', options1);
+</script>
+<script type="text/javascript">
+var geocoder;
+var map;
+var marker
+function initialize() {
+  geocoder = new google.maps.Geocoder();
+    var myOptions = {
+        zoom: 4,//缩放比例
+        mapTypeId: google.maps.MapTypeId.ROADMAP //地图类型 ?MapTypeId.ROADMAP ?MapTypeId.SATELLITE ?MapTypeId.HYBRID ?MapTypeId.TERRAIN 
+
+    }
+    map = new google.maps.Map(document.getElementById("my_canvas"), myOptions);
+    //dxy();
+    var myLatlng = new google.maps.LatLng(34.2182610,108.9641420);
+    map.setCenter(myLatlng);
+    
+    marker = new google.maps.Marker({
+        position: myLatlng,
+        map: map, 
+        draggable:true
+    });
+    google.maps.event.addListener(marker, "dragend", function(event) {
+	       document.getElementById("lat").value=marker.getPosition().lat();
+	       document.getElementById("lng").value=marker.getPosition().lat();
+	       document.getElementById("addr").value=marker.formatted_address;
+	});
+    placeMarker(myLatlng);
+}
+function placeMarker(location) {
+    //根据经纬度获取地址
+    if (geocoder) {
+        geocoder.geocode({ 'location': location }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                if (results[0]) {
+                	document.getElementById("lat").value=results[0].geometry.location.lat();
+         	       	document.getElementById("lng").value=results[0].geometry.location.lng();
+         	       	document.getElementById("addr").value=results[0].formatted_address;
+                }
+            } else {
+                alert("Geocoder failed due to: " + status);
+            }
+        });
+    }
+}
+
+function ggg(){
+	marker.setMap(null);
+	var addr=document.getElementById("name").value;
+	document.getElementById("fullname").value=addr;
+	geocoder.geocode({ 'address': addr }, function (results, status) { //地址解析
+		alert(status);
+        if (status == google.maps.GeocoderStatus.OK) {
+        	var result=results[0].geometry.location;
+            map.setCenter(result);//依据解析的经度纬度设置坐标居中
+            placeMarker(results[0].geometry.location);
+            marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location,
+                draggable:true,
+                //title:results[0].address_components[0].long_name,
+                animation: google.maps.Animation.DROP //坐标动画效果
+            });
+            google.maps.event.addListener(marker, "dragend", function(event) {
+	     	       placeMarker(event.latLng);
+	     	});
+            var infowindow = new google.maps.InfoWindow({
+                content: "<span style='font-size:11px'>" + results[0].address_components[0].long_name + "<br></span>",
+                pixelOffset:0, //坐标偏移量，一般不用修改
+                position: results[0].geometry.location
+            });
+            infowindow.open(map, marker);//默认打开信息窗口。点击做伴弹出信息窗口
+            google.maps.event.addListener(marker, 'click', function () { infowindow.open(map, marker); });
+        } else {
+            alert("未能解析该地址的原因: " + status);
+        }
+    });
+}
+
+function ctype(v){
+	if(v.value=="country"){
+		document.getElementById("scontinent").style.display="block";
+		document.getElementById("scountry").style.display="none";
+		document.getElementById("scity").style.display="none";
+	}else if(v.value=="city"){
+		document.getElementById("scontinent").style.display="none";
+		document.getElementById("scountry").style.display="block";
+		document.getElementById("scity").style.display="none";
+	}else{
+		document.getElementById("scontinent").style.display="none";
+		document.getElementById("scountry").style.display="none";
+		document.getElementById("scity").style.display="block";
+	}
+}
 </script>
 </body>
 </html>

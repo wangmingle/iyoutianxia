@@ -78,8 +78,9 @@ $(document).ready(function(){
 					
 					<div id="tabs">
 						<ul>
-							<li><a class="corner-tl" href="#tabs-date">按日期</a></li>
-							<li><a class="corner-tr" href="#tabs-abc">按标题</a></li>
+							<li><a class="corner-tl" href="#tabs-date">热门行程</a></li>
+							<li><a class="corner-tr" href="#tabs-abc">精品行程</a></li>
+							<li><a class="corner-tr" href="#tabs-abc">团队行程</a></li>
 						</ul>
 						<div id="tabs-date">
 							<div class="colgroup">
@@ -109,12 +110,8 @@ $(document).ready(function(){
 									<img SRC="../img/preview-not-available.gif" alt="" />
 								</div>
 								<div class="width5 column">
-									<form id="${route.id}" method="post" action="notered" class="nyroModal">
-									  <input type="hidden" name="id" value="${route.id }" />
-									  <input type="submit" value="${route.name }" class="btn"/>
-									  
-									</form>
 									
+									<a href="javascript: //;" target="_blank"><b class="big">${route.name }</b></a><br/>
 									<small><b></b> |  作者: <b>${route.author }</b> |  标签: <a href="#">${route.tags }</a> </small><br/>
 									<a href="#">删除</a> &middot; <a href="#">查看</a> &middot; <a href="#">编辑</a>
 									<br>
